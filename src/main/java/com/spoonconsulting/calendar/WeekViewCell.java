@@ -105,6 +105,7 @@ public class WeekViewCell extends Col implements Renderer<WeekViewCell>{
 				if(!disabled) {
 					if (WeekViewDndManager.dragging != null) {
 	
+						
 						evt.preventDefault();
 	
 						((HTMLElement) evt.target).classList.remove("drag-over");
@@ -116,10 +117,11 @@ public class WeekViewCell extends Col implements Renderer<WeekViewCell>{
 							if(!cancel) {
 								Date startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), hour, min);
 								Object newEvt = dragging.getNewEvent(startDate);
+								dragging.setValue(newEvt);
 								WeekView wek = source.getAncestorWithClass("spn-week-view");
 								wek.moveCalEvent(dragging, newEvt);
-								WeekViewDndManager.dragging = null;
 								fireEvent("dropcell");
+								WeekViewDndManager.dragging = null;
 							}
 						}
 					}

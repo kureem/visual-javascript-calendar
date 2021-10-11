@@ -127,6 +127,11 @@ public class MonthViewEvent extends JSContainer implements ViewEvent	{
 		return evt;
 	}
 
+	@Override
+	public Object getValue() {
+		return value;
+	}
+
 	
 	
 	

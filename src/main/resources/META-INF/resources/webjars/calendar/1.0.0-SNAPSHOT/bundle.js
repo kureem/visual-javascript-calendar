@@ -7,7 +7,14 @@ var com;
         (function (calendar) {
             class Boot {
                 static main(args) {
-                    eval("window.calendar = com.spoonconsulting.calendar;");
+                    const table = new com.spoonconsulting.calendar.WeekView("wv");
+                    table.reset();
+                    setTimeout((((table) => {
+                        return (e) => {
+                            table.render(api.ContainerRenderer.getElementById("semainetype"));
+                            table.render(api.ContainerRenderer.getElementById("semainetype"));
+                        };
+                    })(table)), 1000);
                 }
             }
             calendar.Boot = Boot;
@@ -249,6 +256,13 @@ var com;
                     }
                     return evt;
                 }
+                /**
+                 *
+                 * @return {Object}
+                 */
+                getValue() {
+                    return this.value;
+                }
             }
             calendar.MonthViewEvent = MonthViewEvent;
             MonthViewEvent["__class"] = "com.spoonconsulting.calendar.MonthViewEvent";
@@ -479,9 +493,70 @@ var com;
     (function (spoonconsulting) {
         var calendar;
         (function (calendar) {
+            let WeekDay;
+            (function (WeekDay) {
+                WeekDay[WeekDay["SUNDAY"] = 0] = "SUNDAY";
+                WeekDay[WeekDay["MONDAY"] = 1] = "MONDAY";
+                WeekDay[WeekDay["TUESDAY"] = 2] = "TUESDAY";
+                WeekDay[WeekDay["WEDNESDAY"] = 3] = "WEDNESDAY";
+                WeekDay[WeekDay["THURSDAY"] = 4] = "THURSDAY";
+                WeekDay[WeekDay["FRIDAY"] = 5] = "FRIDAY";
+                WeekDay[WeekDay["SATURDAY"] = 6] = "SATURDAY";
+            })(WeekDay = calendar.WeekDay || (calendar.WeekDay = {}));
+            /** @ignore */
+            class WeekDay_$WRAPPER {
+                constructor(_$ordinal, _$name, shortFR, shortEN, longFR, longEN) {
+                    this._$ordinal = _$ordinal;
+                    this._$name = _$name;
+                    if (this.shortFR === undefined) {
+                        this.shortFR = null;
+                    }
+                    if (this.shortEN === undefined) {
+                        this.shortEN = null;
+                    }
+                    if (this.longFR === undefined) {
+                        this.longFR = null;
+                    }
+                    if (this.longEN === undefined) {
+                        this.longEN = null;
+                    }
+                    this.shortFR = shortFR;
+                    this.shortEN = shortEN;
+                    this.longFR = longFR;
+                    this.longEN = longEN;
+                }
+                getShortFR() {
+                    return this.shortFR;
+                }
+                getShortEN() {
+                    return this.shortEN;
+                }
+                getLongFR() {
+                    return this.longFR;
+                }
+                getLongEN() {
+                    return this.longEN;
+                }
+                name() { return this._$name; }
+                ordinal() { return this._$ordinal; }
+                compareTo(other) { return this._$ordinal - (isNaN(other) ? other._$ordinal : other); }
+            }
+            calendar.WeekDay_$WRAPPER = WeekDay_$WRAPPER;
+            WeekDay["__class"] = "com.spoonconsulting.calendar.WeekDay";
+            WeekDay["__interfaces"] = ["java.lang.constant.Constable", "java.lang.Comparable", "java.io.Serializable"];
+            WeekDay["_$wrappers"] = { 0: new WeekDay_$WRAPPER(0, "SUNDAY", "Dim", "Dimanche", "Sun", "Sunday"), 1: new WeekDay_$WRAPPER(1, "MONDAY", "Lun", "Lundi", "Mon", "Monday"), 2: new WeekDay_$WRAPPER(2, "TUESDAY", "Mar", "Mardi", "Tue", "Tuesday"), 3: new WeekDay_$WRAPPER(3, "WEDNESDAY", "Mer", "Mercredi", "Wed", "Wednesday"), 4: new WeekDay_$WRAPPER(4, "THURSDAY", "Jeu", "Jeudi", "Thurs", "Thursday"), 5: new WeekDay_$WRAPPER(5, "FRIDAY", "Ven", "Vendredi", "Fri", "Friday"), 6: new WeekDay_$WRAPPER(6, "SATURDAY", "Sam", "Samedi", "Sat", "Saturday") };
+        })(calendar = spoonconsulting.calendar || (spoonconsulting.calendar = {}));
+    })(spoonconsulting = com.spoonconsulting || (com.spoonconsulting = {}));
+})(com || (com = {}));
+(function (com) {
+    var spoonconsulting;
+    (function (spoonconsulting) {
+        var calendar;
+        (function (calendar) {
             class WeekView extends JSContainer {
                 constructor(name) {
                     super(name, "div");
+                    this.events = (new Array());
                     this.startDate = new Date();
                     this.days = 7;
                     this.startHour = 0;
@@ -512,6 +587,9 @@ var com;
                     this.body.addChild(this.bodyRightBody);
                     this.body.setStyle("height", "729px");
                     this.body.setStyle("overflow", "auto");
+                }
+                refresh() {
+                    this.reset();
                 }
                 reset() {
                     this.fillAll();
@@ -565,17 +643,13 @@ var com;
                         (target => (typeof target === 'function') ? target(calEvt) : target.apply(calEvt))(this.eventDecorator);
                     }
                 }
+                moveDays(amount) {
+                    this.startDate = com.spoonconsulting.calendar.Util.addDays(this.startDate, amount);
+                    this.getStartDate();
+                    this.refresh();
+                }
                 fillRightBody() {
-                    this.startDate.setHours(0, 0, 0, 0);
-                    const day = this.startDate.getDay();
-                    if (day > 0) {
-                        const toRemove = 1000 * 60 * 60 * 24 * (day - 1);
-                        this.startDate = new Date(this.startDate.getTime() - toRemove);
-                    }
-                    else {
-                        const toRemove = 1000 * 60 * 60 * 24 * 6;
-                        this.startDate = new Date(this.startDate.getTime() - toRemove);
-                    }
+                    this.getStartDate();
                     this.headerRightBody.clearChildren();
                     this.headerRightBody.setRendered(false);
                     this.bodyRightBody.clearChildren();
@@ -609,19 +683,93 @@ var com;
                         }
                         ;
                     }
+                    for (let index128 = 0; index128 < this.events.length; index128++) {
+                        let evt = this.events[index128];
+                        {
+                            this.addCalEvent$jsweet_lang_Object$boolean(evt, false);
+                        }
+                    }
+                }
+                getDays() {
+                    return this.days;
+                }
+                setDays(days) {
+                    this.days = days;
+                    this.getStartDate();
+                }
+                getStartHour() {
+                    return this.startHour;
+                }
+                setStartHour(startHour) {
+                    this.startHour = startHour;
+                    this.getStartDate();
+                }
+                getEndHour() {
+                    return this.endHour;
+                }
+                setEndHour(endHour) {
+                    this.endHour = endHour;
                 }
                 setStartDate(date) {
                     this.startDate = date;
+                    this.getStartDate();
+                }
+                getEndDate() {
+                    this.getStartDate();
+                    const endDate = com.spoonconsulting.calendar.Util.addDays(this.startDate, this.days);
+                    endDate.setHours(this.endHour);
+                    endDate.setMinutes(59);
+                    return endDate;
+                }
+                getStartDate() {
+                    this.startDate.setHours(0, 0, 0, 0);
+                    const day = this.startDate.getDay();
+                    if (day > 0) {
+                        const toRemove = 1000 * 60 * 60 * 24 * (day - 1);
+                        this.startDate = new Date(this.startDate.getTime() - toRemove);
+                    }
+                    else {
+                        const toRemove = 1000 * 60 * 60 * 24 * 6;
+                        this.startDate = new Date(this.startDate.getTime() - toRemove);
+                    }
+                    this.startDate.setHours(this.startHour);
+                    this.startDate.setMinutes(0);
+                    return this.startDate;
+                }
+                isInRange(date) {
+                    const startDate = this.getStartDate();
+                    const endDate = this.getEndDate();
+                    if (date.getTime() >= startDate.getTime() && date.getTime() <= endDate.getTime()) {
+                        return true;
+                    }
+                    return false;
                 }
                 setTimeRange(startHour, endHour) {
                     this.startHour = startHour;
                     this.endHour = endHour;
                 }
+                removeEvent(value) {
+                    const tmp = (new Array());
+                    const index = this.events.indexOf(value);
+                    let i = 0;
+                    for (let index129 = 0; index129 < this.events.length; index129++) {
+                        let tm = this.events[index129];
+                        {
+                            if (index !== i) {
+                                tmp.push(tm);
+                            }
+                            i++;
+                        }
+                    }
+                    this.events = tmp;
+                }
                 removeCalEvent(uiCalEvt) {
+                    const value = uiCalEvt.getValue();
+                    this.removeEvent(value);
                     {
-                        let array129 = this.bodyRightBody.getCells();
-                        for (let index128 = 0; index128 < array129.length; index128++) {
-                            let r = array129[index128];
+                        let array131 = this.bodyRightBody.getCells();
+                        for (let index130 = 0; index130 < array131.length; index130++) {
+                            let r = array131[index130];
                             {
                                 r.removeCalEvent(uiCalEvt);
                             }
@@ -632,14 +780,14 @@ var com;
                 adjustEventWidth() {
                     const multiHold = (new Array());
                     {
-                        let array131 = this.bodyRightBody.getCells();
-                        for (let index130 = 0; index130 < array131.length; index130++) {
-                            let dcell = array131[index130];
+                        let array133 = this.bodyRightBody.getCells();
+                        for (let index132 = 0; index132 < array133.length; index132++) {
+                            let dcell = array133[index132];
                             {
                                 {
-                                    let array133 = dcell.getCells();
-                                    for (let index132 = 0; index132 < array133.length; index132++) {
-                                        let cell = array133[index132];
+                                    let array135 = dcell.getCells();
+                                    for (let index134 = 0; index134 < array135.length; index134++) {
+                                        let cell = array135[index134];
                                         {
                                             const holding = cell.getHolding();
                                             const size = holding.length;
@@ -656,14 +804,14 @@ var com;
                         return (b.getHolding().length - a.getHolding().length);
                     });
                     const done = new Object();
-                    for (let index134 = 0; index134 < sorted.length; index134++) {
-                        let cell = sorted[index134];
+                    for (let index136 = 0; index136 < sorted.length; index136++) {
+                        let cell = sorted[index136];
                         {
                             const hds = cell.getHolding();
                             const size = hds.length;
                             console.info("size::" + size);
-                            for (let index135 = 0; index135 < hds.length; index135++) {
-                                let ev = hds[index135];
+                            for (let index137 = 0; index137 < hds.length; index137++) {
+                                let ev = hds[index137];
                                 {
                                     if (!done.hasOwnProperty(ev.getId())) {
                                         done[ev.getId()] = ev;
@@ -680,35 +828,53 @@ var com;
                         }
                     }
                 }
-                addCalEvent(evt) {
+                addCalEvent$jsweet_lang_Object(evt) {
+                    this.addCalEvent$jsweet_lang_Object$boolean(evt, true);
+                }
+                addCalEvent$jsweet_lang_Object$boolean(evt, push) {
+                    if (push) {
+                        this.events.push(evt);
+                    }
                     const wk = new com.spoonconsulting.calendar.WeekViewEvent("");
                     wk.setValue(evt);
                     const startDate = wk.getStartDate();
                     const endDate = wk.getEndDate();
-                    const cell = this.getDateCell(startDate);
-                    cell.addCalEvent(wk);
-                    const startHr = startDate.getHours();
-                    const endHr = endDate.getHours();
-                    const endMin = endDate.getMinutes();
-                    let counter = 0;
-                    for (let i = startHr; i < endHr; i++) {
-                        {
-                            counter++;
-                            const tmpDate = com.spoonconsulting.calendar.Util.addHour(startDate, counter);
-                            const hcell = this.getDateCell(tmpDate);
-                            hcell.holdHr(wk);
-                            if (i < endHr - 1) {
-                                hcell.holdHalfHr(wk);
-                            }
-                            else {
-                                if (endMin > 0) {
+                    if (this.isInRange(startDate)) {
+                        const cell = this.getDateCell(startDate);
+                        cell.addCalEvent(wk);
+                        const startHr = startDate.getHours();
+                        const endHr = endDate.getHours();
+                        const endMin = endDate.getMinutes();
+                        let counter = 0;
+                        for (let i = startHr; i < endHr; i++) {
+                            {
+                                counter++;
+                                const tmpDate = com.spoonconsulting.calendar.Util.addHour(startDate, counter);
+                                const hcell = this.getDateCell(tmpDate);
+                                hcell.holdHr(wk);
+                                if (i < endHr - 1) {
                                     hcell.holdHalfHr(wk);
                                 }
+                                else {
+                                    if (endMin > 0) {
+                                        hcell.holdHalfHr(wk);
+                                    }
+                                }
                             }
+                            ;
                         }
-                        ;
+                        this.adjustEventWidth();
                     }
-                    this.adjustEventWidth();
+                }
+                addCalEvent(evt, push) {
+                    if (((evt != null && evt instanceof Object) || evt === null) && ((typeof push === 'boolean') || push === null)) {
+                        return this.addCalEvent$jsweet_lang_Object$boolean(evt, push);
+                    }
+                    else if (((evt != null && evt instanceof Object) || evt === null) && push === undefined) {
+                        return this.addCalEvent$jsweet_lang_Object(evt);
+                    }
+                    else
+                        throw new Error('invalid overload');
                 }
                 unHoldEvent(uiCalEvt) {
                     this.bodyRightBody.unholdEvent(uiCalEvt);
@@ -716,8 +882,8 @@ var com;
                 adjustHolding(uiCalEvt) {
                     this.unHoldEvent(uiCalEvt);
                     const cells = this.getCellsForDateRange(uiCalEvt.getStartDate(), uiCalEvt.getEndDate());
-                    for (let index136 = 0; index136 < cells.length; index136++) {
-                        let cell = cells[index136];
+                    for (let index138 = 0; index138 < cells.length; index138++) {
+                        let cell = cells[index138];
                         {
                             cell.hold(uiCalEvt);
                         }
@@ -725,7 +891,7 @@ var com;
                 }
                 moveCalEvent(uiCalEvt, newEvt) {
                     this.removeCalEvent(uiCalEvt);
-                    this.addCalEvent(newEvt);
+                    this.addCalEvent$jsweet_lang_Object(newEvt);
                 }
                 getCellsForDateRange(startDate, endDate) {
                     const result = (new Array());
@@ -763,9 +929,9 @@ var com;
                 getDateCell(date) {
                     const hr = date.getHours();
                     {
-                        let array138 = this.bodyRightBody.getCells();
-                        for (let index137 = 0; index137 < array138.length; index137++) {
-                            let cell = array138[index137];
+                        let array140 = this.bodyRightBody.getCells();
+                        for (let index139 = 0; index139 < array140.length; index139++) {
+                            let cell = array140[index139];
                             {
                                 if (com.spoonconsulting.calendar.Util.isSameDate(cell.getDate(), date)) {
                                     if (cell.getHour() === hr)
@@ -838,7 +1004,14 @@ var com;
                     this.stopDrag = (e) => {
                         if (this.resizing) {
                             this.resizing = false;
-                            this.updateEndDate();
+                            const ce = this.beforeResize();
+                            const cancel = ce.defaultPrevented || ce.cancelBubble || !ce.returnValue;
+                            if (cancel) {
+                                this.cancelUpdate();
+                            }
+                            else {
+                                this.updateEndDate();
+                            }
                             this.p.classList.remove("spn-resizing");
                             document.documentElement.removeEventListener("mousemove", (((funcInst) => { if (typeof funcInst == 'function') {
                                 return funcInst;
@@ -900,8 +1073,8 @@ var com;
                     return (endDate.getTime() - startDate.getTime());
                 }
                 isHeldBy(cell) {
-                    for (let index139 = 0; index139 < this.heldBy.length; index139++) {
-                        let c = this.heldBy[index139];
+                    for (let index141 = 0; index141 < this.heldBy.length; index141++) {
+                        let c = this.heldBy[index141];
                         {
                             if (c.getId() === cell.getId()) {
                                 return true;
@@ -936,9 +1109,9 @@ var com;
                 getNewEvent(startDate) {
                     const evt = new Object();
                     {
-                        let array141 = Object.keys(this.value);
-                        for (let index140 = 0; index140 < array141.length; index140++) {
-                            let key = array141[index140];
+                        let array143 = Object.keys(this.value);
+                        for (let index142 = 0; index142 < array143.length; index142++) {
+                            let key = array143[index142];
                             {
                                 evt[key] = this.value[key];
                                 if (key === "startDate") {
@@ -956,7 +1129,19 @@ var com;
                     }
                     return evt;
                 }
+                cancelUpdate() {
+                    this.setStyle("height", this.getStyle("height"));
+                }
+                beforeResize() {
+                    const evt = new CustomEvent("beforeresize");
+                    evt["value"] = this.value;
+                    evt["calEvent"] = this;
+                    const wj = (this.getAncestorWithClass("WeekView"));
+                    wj.fireListener("beforeresize", evt);
+                    return evt;
+                }
                 updateEndDate() {
+                    const wj = (this.getAncestorWithClass("WeekView"));
                     const remainder = this.newHeight % com.spoonconsulting.calendar.WeekView.CELL_HEIGHT;
                     let segments = (this.newHeight - remainder) / com.spoonconsulting.calendar.WeekView.CELL_HEIGHT;
                     if (remainder > 0) {
@@ -968,9 +1153,12 @@ var com;
                     this.setStyle("height", segments * com.spoonconsulting.calendar.WeekView.CELL_HEIGHT + "px");
                     this.getNative().style.height = this.getStyle("height");
                     this.time.setHtml(this.formatDate(this.getStartDate()) + " - " + this.formatDate(this.getEndDate()));
-                    const wj = (this.getAncestorWithClass("WeekView"));
                     wj.adjustHolding(this);
                     wj.adjustEventWidth();
+                    const evt = new CustomEvent("afterresize");
+                    evt["calEvent"] = this;
+                    evt["value"] = this.value;
+                    wj.fireListener("afterresize", evt);
                 }
                 /**
                  *
@@ -1046,7 +1234,7 @@ var com;
                         const me = evt;
                         this.__parent.startY = me.clientY;
                         this.__parent.p = this.__parent.getNative();
-                        this.__parent.startHeight = parseInt(document.defaultView.getComputedStyle(this.__parent.p).height, 10);
+                        this.__parent.startHeight = parseInt(this.__parent.p.style.height, 10);
                         this.__parent.resizer.getNative().addEventListener("mousedown", (e) => {
                             document.documentElement.addEventListener("mousemove", (((funcInst) => { if (typeof funcInst == 'function') {
                                 return funcInst;
@@ -1071,8 +1259,19 @@ var com;
                      */
                     performAction(source, evt) {
                         const wv = (this.__parent.getAncestorWithClass("WeekView"));
-                        const ev = (source.getAncestorWithClass("spn-week-view-event"));
-                        wv.removeCalEvent(ev);
+                        const uical = (source.getAncestorWithClass("spn-week-view-event"));
+                        const beforedelete = new CustomEvent("beforedelete");
+                        beforedelete["calEvent"] = uical;
+                        beforedelete["value"] = this.__parent.value;
+                        wv.fireListener("beforedelete", beforedelete);
+                        const cancel = beforedelete.defaultPrevented || beforedelete.cancelBubble || !beforedelete.returnValue;
+                        if (!cancel) {
+                            wv.removeCalEvent(uical);
+                            const __delete = new CustomEvent("delete");
+                            __delete["value"] = this.__parent.value;
+                            __delete["calEvent"] = uical;
+                            wv.fireListener("delete", __delete);
+                        }
                     }
                 }
                 WeekViewEvent.WeekViewEvent$3 = WeekViewEvent$3;
@@ -1288,14 +1487,14 @@ var com;
                 }
                 unholdEvent(uiCalEvt) {
                     {
-                        let array143 = this.getCells();
-                        for (let index142 = 0; index142 < array143.length; index142++) {
-                            let dc = array143[index142];
+                        let array145 = this.getCells();
+                        for (let index144 = 0; index144 < array145.length; index144++) {
+                            let dc = array145[index144];
                             {
                                 {
-                                    let array145 = dc.getCells();
-                                    for (let index144 = 0; index144 < array145.length; index144++) {
-                                        let c = array145[index144];
+                                    let array147 = dc.getCells();
+                                    for (let index146 = 0; index146 < array147.length; index146++) {
+                                        let c = array147[index146];
                                         {
                                             c.unhold(uiCalEvt);
                                         }
@@ -1464,8 +1663,8 @@ var com;
                 }
                 unhold(uiCalEvt) {
                     const tmp = (new Array());
-                    for (let index146 = 0; index146 < this.holding.length; index146++) {
-                        let ev = this.holding[index146];
+                    for (let index148 = 0; index148 < this.holding.length; index148++) {
+                        let ev = this.holding[index148];
                         {
                             if (ev.getId() !== uiCalEvt.getId()) {
                                 tmp.push(ev);
@@ -1475,8 +1674,8 @@ var com;
                     this.holding = tmp;
                 }
                 isHolding(uiCalEvt) {
-                    for (let index147 = 0; index147 < this.holding.length; index147++) {
-                        let ev = this.holding[index147];
+                    for (let index149 = 0; index149 < this.holding.length; index149++) {
+                        let ev = this.holding[index149];
                         {
                             if (ev.getId() === uiCalEvt.getId()) {
                                 return true;
@@ -1639,10 +1838,11 @@ var com;
                                     if (!cancel) {
                                         const startDate = new Date(this.date.getFullYear(), this.date.getMonth(), this.date.getDate(), this.hour, this.min);
                                         const newEvt = dragging.getNewEvent(startDate);
+                                        dragging.setValue(newEvt);
                                         const wek = (source.getAncestorWithClass("spn-week-view"));
                                         wek.moveCalEvent(dragging, newEvt);
-                                        com.spoonconsulting.calendar.WeekViewDndManager.dragging = null;
                                         this.__parent.fireEvent("dropcell");
+                                        com.spoonconsulting.calendar.WeekViewDndManager.dragging = null;
                                     }
                                 }
                             }

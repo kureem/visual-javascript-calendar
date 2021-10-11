@@ -52,6 +52,11 @@ declare namespace com.spoonconsulting.calendar {
          * @return {Object}
          */
         getNewEvent(startDate: Date): Object;
+        /**
+         *
+         * @return {Object}
+         */
+        getValue(): Object;
     }
     namespace MonthViewEvent {
         class MonthViewEvent$0 implements api.EventListener {
@@ -126,12 +131,42 @@ declare namespace com.spoonconsulting.calendar {
     interface ViewEvent extends api.Renderable {
         getNewEvent(date: Date): Object;
         setValue(value: Object): any;
+        getValue(): Object;
         getStartDate(): Date;
         getEndDate(): Date;
     }
 }
 declare namespace com.spoonconsulting.calendar {
+    enum WeekDay {
+        SUNDAY = 0,
+        MONDAY = 1,
+        TUESDAY = 2,
+        WEDNESDAY = 3,
+        THURSDAY = 4,
+        FRIDAY = 5,
+        SATURDAY = 6
+    }
+    /** @ignore */
+    class WeekDay_$WRAPPER {
+        protected _$ordinal: number;
+        protected _$name: string;
+        constructor(_$ordinal: number, _$name: string, shortFR: any, shortEN: any, longFR: any, longEN: any);
+        shortFR: any;
+        shortEN: any;
+        longFR: any;
+        longEN: any;
+        getShortFR(): string;
+        getShortEN(): string;
+        getLongFR(): string;
+        getLongEN(): string;
+        name(): string;
+        ordinal(): number;
+        compareTo(other: any): number;
+    }
+}
+declare namespace com.spoonconsulting.calendar {
     class WeekView extends JSContainer {
+        events: Array<Object>;
         startDate: Date;
         days: number;
         startHour: number;
@@ -146,18 +181,32 @@ declare namespace com.spoonconsulting.calendar {
         cellDecorator: (p1: com.spoonconsulting.calendar.WeekViewCell) => void;
         eventDecorator: (p1: com.spoonconsulting.calendar.WeekViewEvent) => void;
         constructor(name: string);
+        refresh(): void;
         reset(): void;
         fillAll(): void;
         formatDate(date: Date): string;
         fillLeftGutter(): void;
         decorateCell(cell: com.spoonconsulting.calendar.WeekViewCell): void;
         decorateCalEvent(calEvt: com.spoonconsulting.calendar.WeekViewEvent): void;
+        moveDays(amount: number): void;
         fillRightBody(): void;
+        getDays(): number;
+        setDays(days: number): void;
+        getStartHour(): number;
+        setStartHour(startHour: number): void;
+        getEndHour(): number;
+        setEndHour(endHour: number): void;
         setStartDate(date: Date): void;
+        getEndDate(): Date;
+        getStartDate(): Date;
+        isInRange(date: Date): boolean;
         setTimeRange(startHour: number, endHour: number): void;
+        removeEvent(value: Object): void;
         removeCalEvent(uiCalEvt: com.spoonconsulting.calendar.ViewEvent): void;
         adjustEventWidth(): void;
-        addCalEvent(evt: Object): void;
+        addCalEvent$jsweet_lang_Object(evt: Object): void;
+        addCalEvent$jsweet_lang_Object$boolean(evt: Object, push: boolean): void;
+        addCalEvent(evt?: any, push?: any): any;
         unHoldEvent(uiCalEvt: com.spoonconsulting.calendar.WeekViewEvent): void;
         adjustHolding(uiCalEvt: com.spoonconsulting.calendar.WeekViewEvent): void;
         moveCalEvent(uiCalEvt: com.spoonconsulting.calendar.ViewEvent, newEvt: Object): void;
@@ -203,6 +252,8 @@ declare namespace com.spoonconsulting.calendar {
         getValue(): Object;
         removeFromCell(): void;
         getNewEvent(startDate: Date): Object;
+        cancelUpdate(): void;
+        beforeResize(): CustomEvent;
         updateEndDate(): void;
         /**
          *

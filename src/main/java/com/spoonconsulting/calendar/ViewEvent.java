@@ -10,6 +10,8 @@ public interface ViewEvent  extends Renderable{
 	
 	public void setValue(Object value);
 	
+	public Object getValue();
+	
 	public Date getStartDate();
 
 	public Date getEndDate() ;

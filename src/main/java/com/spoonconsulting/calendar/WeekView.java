@@ -37,11 +37,13 @@ public class WeekView extends JSContainer{
 	//-refresh
 	//-setStartDate
 	
+	
+	private Array<Object> events = new Array<Object>();
+	
 	private Date startDate = new Date();
 	
 	
 	private int days = 7;
-	//private Date endDate;
 	
 	private double startHour = 0;
 	
@@ -85,6 +87,11 @@ public class WeekView extends JSContainer{
 		body.setStyle("height", "729px");
 		body.setStyle("overflow", "auto");
 		
+	}
+	
+	
+	public void refresh() {
+		reset();
 	}
 	
 	public void reset() {
@@ -153,17 +160,16 @@ public class WeekView extends JSContainer{
 		}
 	}
 	
+	
+	public void moveDays(int amount) {
+		startDate = Util.addDays(startDate,  amount);
+		getStartDate();
+		refresh();
+	}
+	
 	protected void fillRightBody() {
+		getStartDate();
 		
-		startDate.setHours(0, 0, 0, 0);
-		double day = startDate.getDay();
-		if(day > 0) {
-			double toRemove = 1000*60*60*24*(day-1);
-			startDate = new Date(startDate.getTime() - toRemove);
-		}else {
-			double toRemove = 1000*60*60*24*6;
-			startDate = new Date(startDate.getTime() - toRemove);
-		}
 		headerRightBody.clearChildren();
 		headerRightBody.setRendered(false);
 		bodyRightBody.clearChildren();
@@ -194,10 +200,81 @@ public class WeekView extends JSContainer{
 			
 		}
 		
+		for(Object evt : events) {
+			addCalEvent(evt, false);
+		}
+		
 	}
 	
+	public int getDays() {
+		return days;
+	}
+
+	public void setDays(int days) {
+		this.days = days;
+		getStartDate();
+	}
+
+
+	public double getStartHour() {
+		return startHour;
+	}
+
+
+	public void setStartHour(double startHour) {
+		this.startHour = startHour;
+		getStartDate();
+	}
+
+
+	public double getEndHour() {
+		return endHour;
+	}
+
+
+	public void setEndHour(double endHour) {
+		this.endHour = endHour;
+	}
+
+
 	public void setStartDate(Date date) {
 		this.startDate = date;
+		getStartDate();
+	}
+	
+	public Date getEndDate() {
+		getStartDate();
+		Date endDate = Util.addDays(startDate, days);
+		
+		endDate.setHours(endHour);
+		endDate.setMinutes(59);
+		return endDate;
+		
+	}
+	
+	public Date getStartDate() {
+		startDate.setHours(0, 0, 0, 0);
+		double day = startDate.getDay();
+		if(day > 0) {
+			double toRemove = 1000*60*60*24*(day-1);
+			startDate = new Date(startDate.getTime() - toRemove);
+		}else {
+			double toRemove = 1000*60*60*24*6;
+			startDate = new Date(startDate.getTime() - toRemove);
+		}
+		startDate.setHours(startHour);
+		startDate.setMinutes(0);
+		return startDate;
+	}
+	
+	public boolean isInRange(Date date) {
+		Date startDate = getStartDate();
+		Date endDate = getEndDate();
+		
+		if(date.getTime() >= startDate.getTime() && date.getTime() <= endDate.getTime()) {
+			return true;
+		}
+		return false;
 	}
 	
 	
@@ -206,7 +283,24 @@ public class WeekView extends JSContainer{
 		this.endHour = endHour;
 	}
 	
+	public void removeEvent(Object value) {
+		Array<Object> tmp = new Array<Object>();
+		double index = events.indexOf(value);
+		double i = 0;
+		for(Object tm : events) {
+			if(index != i) {
+				tmp.push(tm);
+			}
+			i++;
+		}
+		events = tmp;
+	}
+	
 	public void removeCalEvent(ViewEvent uiCalEvt) {
+		Object value = uiCalEvt.getValue();
+		removeEvent(value);
+		
+		
 		for(WeekViewDateCell r : bodyRightBody.getCells()) {
 			r.removeCalEvent(uiCalEvt);
 		}
@@ -250,51 +344,55 @@ public class WeekView extends JSContainer{
 					}
 					ev.setStyle("left",(90/size) *hds.indexOf(ev) + "%");
 				}
-				
-				
 			}
-			
 		}
 	}
 	
 	public void addCalEvent(Object evt) {
+		addCalEvent(evt, true);
+	}
 	
+	public void addCalEvent(Object evt, boolean push) {
+	
+		if(push) {
+			events.push(evt);
+		}
 		WeekViewEvent wk = new WeekViewEvent("");
 		wk.setValue(evt);
+		
+		
 		
 		Date startDate = wk.getStartDate();
 		Date endDate = wk.getEndDate();
 		
-		WeekViewDateCell cell = getDateCell(startDate);
-		cell.addCalEvent(wk);
+		if(isInRange(startDate)) {
 		
-		double startHr = startDate.getHours();
-	//	double startMin = startDate.getMinutes();
-		double endHr = endDate.getHours();
-		double endMin = endDate.getMinutes();
-		double counter = 0;
-		
-		// 4 - 7
-		// 4,5,6 - i
-		// 1,2,3 - counter
-		// 5,6,7 - hr
-		for(double i = startHr; i < endHr;i++) {
-			counter++;
-			Date tmpDate = Util.addHour(startDate, counter);
+			WeekViewDateCell cell = getDateCell(startDate);
+			cell.addCalEvent(wk);
 			
-			WeekViewDateCell hcell = getDateCell(tmpDate);
-			hcell.holdHr(wk);
-			if(i < endHr-1) {
-				hcell.holdHalfHr(wk);
-			}else {
-				if(endMin > 0) {
+			double startHr = startDate.getHours();
+			double endHr = endDate.getHours();
+			double endMin = endDate.getMinutes();
+			double counter = 0;
+			
+			for(double i = startHr; i < endHr;i++) {
+				counter++;
+				Date tmpDate = Util.addHour(startDate, counter);
+				
+				WeekViewDateCell hcell = getDateCell(tmpDate);
+				hcell.holdHr(wk);
+				if(i < endHr-1) {
 					hcell.holdHalfHr(wk);
+				}else {
+					if(endMin > 0) {
+						hcell.holdHalfHr(wk);
+					}
 				}
+				
 			}
 			
+			adjustEventWidth();
 		}
-		
-		adjustEventWidth();
 		
 	}
 	

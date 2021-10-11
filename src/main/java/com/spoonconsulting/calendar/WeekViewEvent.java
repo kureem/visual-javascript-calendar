@@ -9,6 +9,7 @@ import framework.components.JSContainer;
 import framework.components.api.EventListener;
 import framework.components.api.Renderable;
 import framework.components.api.Renderer;
+import jsweet.dom.CustomEvent;
 import jsweet.dom.DragEvent;
 import jsweet.dom.Event;
 import jsweet.dom.HTMLElement;
@@ -56,8 +57,14 @@ public class WeekViewEvent extends JSContainer implements ViewEvent, Renderer<We
 
 		if(resizing) {
 			resizing = false;
-			updateEndDate();
 			
+			CustomEvent ce = beforeResize();
+			boolean cancel = ce.defaultPrevented || ce.cancelBubble || !ce.returnValue;
+			if(cancel) {
+				cancelUpdate();
+			}else {
+				updateEndDate();
+			}
 			p.classList.remove("spn-resizing");
 			document.documentElement.removeEventListener("mousemove", doDrag, false);
 			render();
@@ -138,8 +145,24 @@ public class WeekViewEvent extends JSContainer implements ViewEvent, Renderer<We
 			@Override
 			public void performAction(Renderable source, Event evt) {
 				WeekView wv = getAncestorWithClass("WeekView");
-				WeekViewEvent ev = source.getAncestorWithClass("spn-week-view-event");
-				wv.removeCalEvent(ev);
+				
+				WeekViewEvent uical =source.getAncestorWithClass("spn-week-view-event");
+				CustomEvent beforedelete = new CustomEvent("beforedelete");
+				beforedelete.$set("calEvent", uical);
+				beforedelete.$set("value", value);
+				
+				wv.fireListener("beforedelete", beforedelete);
+				
+				boolean cancel = beforedelete.defaultPrevented || beforedelete.cancelBubble || !beforedelete.returnValue;
+				
+				if(!cancel) {
+					wv.removeCalEvent(uical);
+					CustomEvent delete = new CustomEvent("delete");
+					delete.$set("value", value);
+					delete.$set("calEvent",uical);
+					wv.fireListener("delete", delete);
+				}
+				
 			}
 		}, "click");
 		
@@ -254,7 +277,25 @@ public class WeekViewEvent extends JSContainer implements ViewEvent, Renderer<We
 	}
 	
 	
+	
+	public void cancelUpdate() {
+		setStyle("height", getStyle("height"));
+	}
+	
+	
+	public CustomEvent beforeResize() {
+		CustomEvent evt = new CustomEvent("beforeresize");
+		evt.$set("value", value);
+		evt.$set("calEvent", this);
+		WeekView wj = getAncestorWithClass("WeekView");
+		wj.fireListener("beforeresize", evt);
+		return evt;
+	}
+	
 	public void updateEndDate() {
+		WeekView wj = getAncestorWithClass("WeekView");
+		
+		
 		double remainder = newHeight % WeekView.CELL_HEIGHT;
 		double segments = (newHeight - remainder)/WeekView.CELL_HEIGHT;
 		if(remainder > 0) {
@@ -269,9 +310,13 @@ public class WeekViewEvent extends JSContainer implements ViewEvent, Renderer<We
 		getNative().style.height = getStyle("height");
 		this.time.setHtml(formatDate(getStartDate()) + " - " + formatDate(getEndDate()));
 		
-		WeekView wj = getAncestorWithClass("WeekView");
+		
 		wj.adjustHolding(this);
 		wj.adjustEventWidth();
+		CustomEvent evt = new CustomEvent("afterresize");
+		evt.$set("calEvent", this);
+		evt.$set("value", value);
+		wj.fireListener("afterresize", evt);
 		
 	}
 
