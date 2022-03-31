@@ -138,9 +138,9 @@ namespace com.spoonconsulting.calendar {
 
         public removeCalEvent(uiCalEvt: com.spoonconsulting.calendar.ViewEvent) {
             {
-                let array122 = this.body.getCells();
-                for(let index121=0; index121 < array122.length; index121++) {
-                    let r = array122[index121];
+                let array151 = this.body.getCells();
+                for(let index150=0; index150 < array151.length; index150++) {
+                    let r = array151[index150];
                     {
                         r.removeCalEvent(uiCalEvt);
                     }
@@ -155,9 +155,9 @@ namespace com.spoonconsulting.calendar {
 
         public getCell(dt: Date): com.spoonconsulting.calendar.MonthViewCell {
             {
-                let array124 = this.body.getCells();
-                for(let index123=0; index123 < array124.length; index123++) {
-                    let cell = array124[index123];
+                let array153 = this.body.getCells();
+                for(let index152=0; index152 < array153.length; index152++) {
+                    let cell = array153[index152];
                     {
                         if (cell.isSameDate(dt)){
                             return cell;
@@ -230,9 +230,9 @@ namespace com.spoonconsulting.calendar {
         public getNewEvent(startDate: Date): Object {
             const evt: Object = <Object>new Object();
             {
-                let array126 = Object.keys(this.value);
-                for(let index125=0; index125 < array126.length; index125++) {
-                    let key = array126[index125];
+                let array155 = Object.keys(this.value);
+                for(let index154=0; index154 < array155.length; index154++) {
+                    let key = array155[index154];
                     {
                         evt[key] = this.value[key];
                         if (key === "startDate"){
@@ -347,6 +347,10 @@ namespace com.spoonconsulting.calendar {
 namespace com.spoonconsulting.calendar {
     export class Util {
         public static DAYS: string[]; public static DAYS_$LI$(): string[] { if (Util.DAYS == null) { Util.DAYS = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"]; }  return Util.DAYS; }
+
+        static LONG_MONTHS: string[]; public static LONG_MONTHS_$LI$(): string[] { if (Util.LONG_MONTHS == null) { Util.LONG_MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]; }  return Util.LONG_MONTHS; }
+
+        public static SHORT_MONTHS: string[]; public static SHORT_MONTHS_$LI$(): string[] { if (Util.SHORT_MONTHS == null) { Util.SHORT_MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]; }  return Util.SHORT_MONTHS; }
 
         public static SHORT_DAYS: string[]; public static SHORT_DAYS_$LI$(): string[] { if (Util.SHORT_DAYS == null) { Util.SHORT_DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]; }  return Util.SHORT_DAYS; }
 
@@ -466,8 +470,8 @@ namespace com.spoonconsulting.calendar {
 
         public static countStartColPosition(day: string, gutter: number, colWidth: number): number {
             let index: number = 0;
-            for(let index127=0; index127 < Util.DAYS_$LI$().length; index127++) {
-                let s = Util.DAYS_$LI$()[index127];
+            for(let index156=0; index156 < Util.DAYS_$LI$().length; index156++) {
+                let s = Util.DAYS_$LI$()[index156];
                 {
                     if (s === day){
                         break;
@@ -725,8 +729,8 @@ namespace com.spoonconsulting.calendar {
                 };}
                 row = row + 1;
             };}
-            for(let index128=0; index128 < this.events.length; index128++) {
-                let evt = this.events[index128];
+            for(let index157=0; index157 < this.events.length; index157++) {
+                let evt = this.events[index157];
                 {
                     this.addCalEvent$jsweet_lang_Object$boolean(evt, false);
                 }
@@ -766,9 +770,9 @@ namespace com.spoonconsulting.calendar {
 
         public getEndDate(): Date {
             this.getStartDate();
-            const endDate: Date = com.spoonconsulting.calendar.Util.addDays(this.startDate, this.days);
-            endDate.setHours(this.endHour);
-            endDate.setMinutes(59);
+            let endDate: Date = com.spoonconsulting.calendar.Util.addDays(this.startDate, this.days - 1);
+            endDate = com.spoonconsulting.calendar.Util.addHour(endDate, this.endHour);
+            endDate = com.spoonconsulting.calendar.Util.addMinutes(endDate, 59);
             return endDate;
         }
 
@@ -805,8 +809,8 @@ namespace com.spoonconsulting.calendar {
             const tmp: Array<Object> = <any>(new Array<Object>());
             const index: number = this.events.indexOf(value);
             let i: number = 0;
-            for(let index129=0; index129 < this.events.length; index129++) {
-                let tm = this.events[index129];
+            for(let index158=0; index158 < this.events.length; index158++) {
+                let tm = this.events[index158];
                 {
                     if (index !== i){
                         tmp.push(tm);
@@ -821,9 +825,9 @@ namespace com.spoonconsulting.calendar {
             const value: Object = uiCalEvt.getValue();
             this.removeEvent(value);
             {
-                let array131 = this.bodyRightBody.getCells();
-                for(let index130=0; index130 < array131.length; index130++) {
-                    let r = array131[index130];
+                let array160 = this.bodyRightBody.getCells();
+                for(let index159=0; index159 < array160.length; index159++) {
+                    let r = array160[index159];
                     {
                         r.removeCalEvent(uiCalEvt);
                     }
@@ -835,14 +839,14 @@ namespace com.spoonconsulting.calendar {
         public adjustEventWidth() {
             const multiHold: Array<com.spoonconsulting.calendar.WeekViewCell> = <any>(new Array<com.spoonconsulting.calendar.WeekViewCell>());
             {
-                let array133 = this.bodyRightBody.getCells();
-                for(let index132=0; index132 < array133.length; index132++) {
-                    let dcell = array133[index132];
+                let array162 = this.bodyRightBody.getCells();
+                for(let index161=0; index161 < array162.length; index161++) {
+                    let dcell = array162[index161];
                     {
                         {
-                            let array135 = dcell.getCells();
-                            for(let index134=0; index134 < array135.length; index134++) {
-                                let cell = array135[index134];
+                            let array164 = dcell.getCells();
+                            for(let index163=0; index163 < array164.length; index163++) {
+                                let cell = array164[index163];
                                 {
                                     const holding: Array<com.spoonconsulting.calendar.ViewEvent> = cell.getHolding();
                                     const size: number = holding.length;
@@ -859,14 +863,14 @@ namespace com.spoonconsulting.calendar {
                 return (b.getHolding().length - a.getHolding().length);
             });
             const done: Object = <Object>new Object();
-            for(let index136=0; index136 < sorted.length; index136++) {
-                let cell = sorted[index136];
+            for(let index165=0; index165 < sorted.length; index165++) {
+                let cell = sorted[index165];
                 {
                     const hds: Array<com.spoonconsulting.calendar.ViewEvent> = cell.getHolding();
                     const size: number = hds.length;
                     console.info("size::" + size);
-                    for(let index137=0; index137 < hds.length; index137++) {
-                        let ev = hds[index137];
+                    for(let index166=0; index166 < hds.length; index166++) {
+                        let ev = hds[index166];
                         {
                             if (!done.hasOwnProperty(ev.getId())){
                                 done[ev.getId()] = ev;
@@ -934,8 +938,8 @@ namespace com.spoonconsulting.calendar {
         public adjustHolding(uiCalEvt: com.spoonconsulting.calendar.WeekViewEvent) {
             this.unHoldEvent(uiCalEvt);
             const cells: Array<com.spoonconsulting.calendar.WeekViewCell> = this.getCellsForDateRange(uiCalEvt.getStartDate(), uiCalEvt.getEndDate());
-            for(let index138=0; index138 < cells.length; index138++) {
-                let cell = cells[index138];
+            for(let index167=0; index167 < cells.length; index167++) {
+                let cell = cells[index167];
                 {
                     cell.hold(uiCalEvt);
                 }
@@ -977,9 +981,9 @@ namespace com.spoonconsulting.calendar {
         public getDateCell(date: Date): com.spoonconsulting.calendar.WeekViewDateCell {
             const hr: number = date.getHours();
             {
-                let array140 = this.bodyRightBody.getCells();
-                for(let index139=0; index139 < array140.length; index139++) {
-                    let cell = array140[index139];
+                let array169 = this.bodyRightBody.getCells();
+                for(let index168=0; index168 < array169.length; index168++) {
+                    let cell = array169[index168];
                     {
                         if (com.spoonconsulting.calendar.Util.isSameDate(cell.getDate(), date)){
                             if (cell.getHour() === hr)return cell;
@@ -1138,8 +1142,8 @@ namespace com.spoonconsulting.calendar {
         }
 
         public isHeldBy(cell: com.spoonconsulting.calendar.WeekViewCell): boolean {
-            for(let index141=0; index141 < this.heldBy.length; index141++) {
-                let c = this.heldBy[index141];
+            for(let index170=0; index170 < this.heldBy.length; index170++) {
+                let c = this.heldBy[index170];
                 {
                     if (c.getId() === cell.getId()){
                         return true;
@@ -1180,9 +1184,9 @@ namespace com.spoonconsulting.calendar {
         public getNewEvent(startDate: Date): Object {
             const evt: Object = <Object>new Object();
             {
-                let array143 = Object.keys(this.value);
-                for(let index142=0; index142 < array143.length; index142++) {
-                    let key = array143[index142];
+                let array172 = Object.keys(this.value);
+                for(let index171=0; index171 < array172.length; index171++) {
+                    let key = array172[index171];
                     {
                         evt[key] = this.value[key];
                         if (key === "startDate"){
@@ -1595,14 +1599,14 @@ namespace com.spoonconsulting.calendar {
 
         public unholdEvent(uiCalEvt: com.spoonconsulting.calendar.WeekViewEvent) {
             {
-                let array145 = this.getCells();
-                for(let index144=0; index144 < array145.length; index144++) {
-                    let dc = array145[index144];
+                let array174 = this.getCells();
+                for(let index173=0; index173 < array174.length; index173++) {
+                    let dc = array174[index173];
                     {
                         {
-                            let array147 = dc.getCells();
-                            for(let index146=0; index146 < array147.length; index146++) {
-                                let c = array147[index146];
+                            let array176 = dc.getCells();
+                            for(let index175=0; index175 < array176.length; index175++) {
+                                let c = array176[index175];
                                 {
                                     c.unhold(uiCalEvt);
                                 }
@@ -1783,8 +1787,8 @@ namespace com.spoonconsulting.calendar {
 
         public unhold(uiCalEvt: com.spoonconsulting.calendar.ViewEvent) {
             const tmp: Array<com.spoonconsulting.calendar.ViewEvent> = <any>(new Array<com.spoonconsulting.calendar.ViewEvent>());
-            for(let index148=0; index148 < this.holding.length; index148++) {
-                let ev = this.holding[index148];
+            for(let index177=0; index177 < this.holding.length; index177++) {
+                let ev = this.holding[index177];
                 {
                     if (ev.getId() !== uiCalEvt.getId()){
                         tmp.push(ev);
@@ -1795,8 +1799,8 @@ namespace com.spoonconsulting.calendar {
         }
 
         public isHolding(uiCalEvt: com.spoonconsulting.calendar.ViewEvent): boolean {
-            for(let index149=0; index149 < this.holding.length; index149++) {
-                let ev = this.holding[index149];
+            for(let index178=0; index178 < this.holding.length; index178++) {
+                let ev = this.holding[index178];
                 {
                     if (ev.getId() === uiCalEvt.getId()){
                         return true;
@@ -2006,6 +2010,10 @@ namespace com.spoonconsulting.calendar {
 com.spoonconsulting.calendar.Util.LONG_DAYS_$LI$();
 
 com.spoonconsulting.calendar.Util.SHORT_DAYS_$LI$();
+
+com.spoonconsulting.calendar.Util.SHORT_MONTHS_$LI$();
+
+com.spoonconsulting.calendar.Util.LONG_MONTHS_$LI$();
 
 com.spoonconsulting.calendar.Util.DAYS_$LI$();
 

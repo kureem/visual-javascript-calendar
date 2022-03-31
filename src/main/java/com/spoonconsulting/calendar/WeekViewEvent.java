@@ -60,6 +60,7 @@ public class WeekViewEvent extends JSContainer implements ViewEvent, Renderer<We
 			
 			CustomEvent ce = beforeResize();
 			boolean cancel = ce.defaultPrevented || ce.cancelBubble || !ce.returnValue;
+			
 			if(cancel) {
 				cancelUpdate();
 			}else {

@@ -95,6 +95,10 @@ declare namespace com.spoonconsulting.calendar {
     class Util {
         static DAYS: string[];
         static DAYS_$LI$(): string[];
+        static LONG_MONTHS: string[];
+        static LONG_MONTHS_$LI$(): string[];
+        static SHORT_MONTHS: string[];
+        static SHORT_MONTHS_$LI$(): string[];
         static SHORT_DAYS: string[];
         static SHORT_DAYS_$LI$(): string[];
         static LONG_DAYS: string[];

@@ -244,10 +244,11 @@ public class WeekView extends JSContainer{
 	
 	public Date getEndDate() {
 		getStartDate();
-		Date endDate = Util.addDays(startDate, days);
-		
-		endDate.setHours(endHour);
-		endDate.setMinutes(59);
+		Date endDate = Util.addDays(startDate, days-1);
+		endDate = Util.addHour(endDate, endHour);
+		endDate = Util.addMinutes(endDate,59);
+		//endDate.setHours(endHour);
+		//endDate.setMinutes(59);
 		return endDate;
 		
 	}
