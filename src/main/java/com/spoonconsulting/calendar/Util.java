@@ -9,6 +9,7 @@ public class Util {
 	public final static String[] DAYS =new String[] {"Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"};
 	
 	
+	@SuppressWarnings("unused")
 	private final static String[] LONG_MONTHS = new String[] {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
 	
 	public final static String[] SHORT_MONTHS = new String[] {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
