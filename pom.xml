@@ -3,10 +3,10 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.spoonconsulting</groupId>
-	<artifactId>calendar</artifactId>
+	<artifactId>datagrid</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<properties>
-		<skipJavadoc>true</skipJavadoc>
+		<skipJavadoc>false</skipJavadoc>
 		<jsweet.transpiler.version>3.0.0</jsweet.transpiler.version>
 		<jsweet.core.version>6.3.0</jsweet.core.version>
 		<java.version.release>11</java.version.release>
@@ -45,8 +45,26 @@
 		<dependency>
 			<groupId>org.vjs</groupId>
 			<artifactId>engine</artifactId>
+			<version>1.0.2-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.spoonconsulting</groupId>
+			<artifactId>lightning</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
-		</dependency> 
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.jsweet.candies/jsweet-core -->
+<dependency>
+    <groupId>org.jsweet.candies</groupId>
+    <artifactId>jsweet-core</artifactId>
+    <version>1.2.0-20161222</version>
+</dependency>
+<!-- 		
+<dependency>
+    <groupId>org.jsweet</groupId>
+    <artifactId>j4ts</artifactId>
+    <version>0.6.0</version>
+</dependency> -->
+		
 	</dependencies>
 	<build>
 		<sourceDirectory>src/main/java</sourceDirectory>
