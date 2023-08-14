@@ -210,6 +210,14 @@ declare namespace sp.datagrid {
         getFieldDateTimeTree(fieldName: string, objectType: string): Promise<sp.datagrid.DateTimeTree>;
         /**
          *
+<<<<<<< HEAD
+=======
+         * @return {Promise}
+         */
+        getBranches(): Promise<string>;
+        /**
+         *
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
          * @param {string} ownerId
          * @param {string[]} caseIds
          * @return {Promise}
@@ -253,7 +261,11 @@ declare namespace sp.datagrid {
         modalMergeCase: sp.datagrid.ModalMergeCases;
         bd: com.spoonconsulting.lightning.Modal.BackDrop;
         grid_: sp.datagrid.DataGrid;
+<<<<<<< HEAD
         constructor(name: string, grid: sp.datagrid.DataGrid);
+=======
+        constructor(name: string, grid: sp.datagrid.DataGrid, dry: boolean);
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
     }
     namespace AppHeader {
         class AppHeader$0 implements api.EventListener {
@@ -514,7 +526,11 @@ declare namespace sp.datagrid {
         modalFieldSelector: sp.datagrid.ModalFieldSelector;
         bd: com.spoonconsulting.lightning.Modal.BackDrop;
         tableInfo: sp.datagrid.TableTitle;
+<<<<<<< HEAD
         constructor(name: string, grid: sp.datagrid.DataGrid);
+=======
+        constructor(name: string, grid: sp.datagrid.DataGrid, dry: boolean, objectType: string);
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
         setColumns(columns: Array<Object>): void;
         setTableInfo(icon: string, title: string, subtitle: string): void;
         setFilterLabel(label: string): void;
@@ -565,6 +581,10 @@ declare namespace sp.datagrid {
 declare namespace sp.datagrid {
     class HeaderAction extends com.spoonconsulting.lightning.ButtonMenu {
         txtSearch: sp.datagrid.TextSearch;
+<<<<<<< HEAD
+=======
+        column: Object;
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
         objectType: string;
         constructor(name: string, col: Object, objectType: string);
         displaceDropdown(): void;
@@ -662,8 +682,14 @@ declare namespace sp.datagrid {
         modalCloseCase: sp.datagrid.ModalCloseCase;
         bd: com.spoonconsulting.lightning.Modal.BackDrop;
         type: string;
+<<<<<<< HEAD
         constructor(name: string, type: string);
         closeCase(selectedId: string): void;
+=======
+        constructor(name: string, type: string, dry: boolean);
+        closeCase(selectedId: string): void;
+        getLeft(colName: string): number;
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
         pinCurrent(): void;
         editRecord(evt: Event): void;
         getType(): string;
@@ -730,6 +756,14 @@ declare namespace sp.datagrid {
         closeCases(status: string, caseIds: Array<string>): Promise<string>;
         mergeCases(caseIds: Array<string>): Promise<string>;
         pinFilter(filterId: string, objectType: string): Promise<string>;
+<<<<<<< HEAD
+=======
+        getBranches(): Promise<string>;
+    }
+}
+declare namespace sp.datagrid {
+    interface IGrids extends api.Renderable {
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
     }
 }
 declare namespace sp.datagrid {
@@ -843,6 +877,14 @@ declare namespace sp.datagrid {
          */
         getFieldValues(fieldName: string, txt: string, page: number, objectType: string, filterId: string): Promise<Array<Object>>;
         getFieldDateTimeTree(fieldName: string, objectType: string): Promise<sp.datagrid.DateTimeTree>;
+<<<<<<< HEAD
+=======
+        /**
+         *
+         * @return {Promise}
+         */
+        getBranches(): Promise<string>;
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
         constructor();
     }
 }
@@ -1197,7 +1239,11 @@ declare namespace sp.datagrid {
         title: JSContainer;
         menu: com.spoonconsulting.lightning.ButtonMenu;
         pin: com.spoonconsulting.lightning.ButtonIcon;
+<<<<<<< HEAD
         constructor(name: string);
+=======
+        constructor(name: string, dry: boolean);
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
         doOpenListFilters(source: api.Renderable): void;
         setInfo(icon: string, title: string, subtitle: string): void;
         setFilterLabel(label: string): void;
@@ -1316,6 +1362,22 @@ declare namespace sp.datagrid {
     class ClickableDataCell extends sp.datagrid.DataCell {
         constructor(name: string, txt: string, Id: string);
     }
+<<<<<<< HEAD
+=======
+    namespace ClickableDataCell {
+        class ClickableDataCell$0 implements api.EventListener {
+            private Id;
+            __parent: any;
+            /**
+             *
+             * @param {*} source
+             * @param {Event} evt
+             */
+            performAction(source: api.Renderable, evt: Event): void;
+            constructor(__parent: any, Id: any);
+        }
+    }
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
 }
 declare namespace sp.datagrid {
     class DateDataCell extends sp.datagrid.DataCell {

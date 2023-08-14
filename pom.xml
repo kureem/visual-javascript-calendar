@@ -3,7 +3,11 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.spoonconsulting</groupId>
+<<<<<<< HEAD
 	<artifactId>filters</artifactId>
+=======
+	<artifactId>datagrid</artifactId>
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
 	<version>1.0.0-SNAPSHOT</version>
 	<properties>
 		<skipJavadoc>false</skipJavadoc>
@@ -46,6 +50,10 @@
 			<groupId>org.vjs</groupId>
 			<artifactId>engine</artifactId>
 			<version>1.0.2-SNAPSHOT</version>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
 		</dependency>
 		<dependency>
 			<groupId>com.spoonconsulting</groupId>
@@ -65,6 +73,12 @@
     <version>0.6.0</version>
 </dependency> -->
 		
+<<<<<<< HEAD
+=======
+=======
+		</dependency> 
+>>>>>>> a1ee7387e0db97148df32d9743f7f1d3539c3093
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
 	</dependencies>
 	<build>
 		<sourceDirectory>src/main/java</sourceDirectory>

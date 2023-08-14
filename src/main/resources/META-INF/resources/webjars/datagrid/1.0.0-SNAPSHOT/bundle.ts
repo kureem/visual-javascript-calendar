@@ -770,6 +770,19 @@ namespace sp.datagrid {
 
         /**
          * 
+<<<<<<< HEAD
+=======
+         * @return {Promise}
+         */
+        public getBranches(): Promise<string> {
+            const fn: Function = <Function>ApexHomePageService.container_$LI$()["getBranches"];
+            const pr: Promise<string> = <Promise<string>>fn.call(fn);
+            return pr;
+        }
+
+        /**
+         * 
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
          * @param {string} ownerId
          * @param {string[]} caseIds
          * @return {Promise}
@@ -861,7 +874,11 @@ namespace sp.datagrid {
 
         /*private*/ grid_: sp.datagrid.DataGrid;
 
+<<<<<<< HEAD
         public constructor(name: string, grid: sp.datagrid.DataGrid) {
+=======
+        public constructor(name: string, grid: sp.datagrid.DataGrid, dry: boolean) {
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
             super(name, "div");
             this.actChangeOwner = new com.spoonconsulting.lightning.Button("changeOwner").setLabel("Change Owner").setVariant(com.spoonconsulting.lightning.enums.Variants.Variant.NEUTRAL);
             this.actNew = new com.spoonconsulting.lightning.Button("new").setLabel("New Case").setVariant(com.spoonconsulting.lightning.enums.Variants.Variant.NEUTRAL);
@@ -873,12 +890,35 @@ namespace sp.datagrid {
             if (this.grid_ === undefined) { this.grid_ = null; }
             this.setMultipleRows(true);
             this.grid_ = grid;
+<<<<<<< HEAD
             const topLeft: com.spoonconsulting.lightning.LayoutItem = new com.spoonconsulting.lightning.LayoutItem("topLeft", "div").setSize(4).setPadding(com.spoonconsulting.lightning.enums.LayoutItemPadding.AROUND_MEDIUM);
             const topRight: com.spoonconsulting.lightning.LayoutItem = new com.spoonconsulting.lightning.LayoutItem("topRight", "div").setSize(8).setPadding(com.spoonconsulting.lightning.enums.LayoutItemPadding.AROUND_MEDIUM);
+=======
+            const topLeft: com.spoonconsulting.lightning.LayoutItem = new com.spoonconsulting.lightning.LayoutItem("topLeft", "div").setSize(5).setPadding(com.spoonconsulting.lightning.enums.LayoutItemPadding.AROUND_MEDIUM);
+            const topRight: com.spoonconsulting.lightning.LayoutItem = new com.spoonconsulting.lightning.LayoutItem("topRight", "div").setSize(7).setPadding(com.spoonconsulting.lightning.enums.LayoutItemPadding.AROUND_MEDIUM);
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
             this.addChild(topLeft).addChild(topRight);
             const actGroup: com.spoonconsulting.lightning.ButtonGroup = new com.spoonconsulting.lightning.ButtonGroup("actions");
             topRight.addChild(actGroup).setStyle("text-align", "right");
             actGroup.addButton(this.actNew).addButton(this.actChangeOwner).addButton(this.actMerge);
+<<<<<<< HEAD
+=======
+            const la: JSContainer = new JSContainer("h3");
+            la.setStyle("font-weight", "bold").setStyle("font-size", "14px");
+            topLeft.addChild(la);
+            if (!dry){
+                sp.datagrid.Util.getService().getBranches().then(((la,topLeft) => {
+                    return (r) => {
+                        if (r != null){
+                            const s: string = /* replaceAll */r.replace(new RegExp(";", 'g'),", ");
+                            if (/* contains */(r.indexOf(";") != -1))la.setHtml("My branches are: " + s); else la.setHtml("My branch is: " + s);
+                            topLeft.setRendered(false);
+                            topLeft.render();
+                        }
+                    }
+                })(la,topLeft));
+            }
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
             this.actMerge.addEventListener(new AppHeader.AppHeader$0(this), "click");
             this.actNew.addEventListener(new AppHeader.AppHeader$1(this), "click");
             this.actNewTask.addEventListener(new AppHeader.AppHeader$2(this), "click");
@@ -1068,7 +1108,11 @@ namespace sp.datagrid {
             this.__orderBy = "CaseNumber";
             this.orderByDir = "ASC";
             this.tableHeaders = <any>(new Array<sp.datagrid.DataGridHeader>());
+<<<<<<< HEAD
             this.pageSize = 10;
+=======
+            this.pageSize = 20;
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
             this.currentPage = 0;
             this.lastPage = false;
             this.filters = <Object>new Object();
@@ -1099,6 +1143,7 @@ namespace sp.datagrid {
                         }
                     }
                 }
+<<<<<<< HEAD
                 if (!istrigger && !bypass){
                     dps.forEach((n) => {
                         if (!n.contains(<Node>e.target)){
@@ -1106,6 +1151,18 @@ namespace sp.datagrid {
                             el.style.display = "none";
                         }
                     });
+=======
+                try {
+                    if (!istrigger && !bypass){
+                        dps.forEach((n) => {
+                            if (!n.contains(<Node>e.target)){
+                                const el: HTMLElement = <HTMLElement>n;
+                                el.style.display = "none";
+                            }
+                        });
+                    }
+                } catch(ee) {
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
                 }
             });
             this.addEventListener(new DataGrid.DataGrid$0(this), "sorting");
@@ -1256,7 +1313,12 @@ namespace sp.datagrid {
                 let col = cols[index132];
                 {
                     const hidden: boolean = <boolean>col["hidden"];
+<<<<<<< HEAD
                     if (hidden == null || !hidden){
+=======
+                    const display: boolean = <boolean>col["display"];
+                    if ((hidden == null || !hidden) && (display == null || display)){
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
                         const width: number = <number>col["width"];
                         let hasQuery: boolean = false;
                         if (col.hasOwnProperty("includes")){
@@ -1371,7 +1433,11 @@ namespace sp.datagrid {
                 this.body.setRendered(false);
                 this.body.render();
             }
+<<<<<<< HEAD
             if (data.length < 10){
+=======
+            if (data.length < 20){
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
                 this.lastPage = true;
             }
         }
@@ -1722,7 +1788,12 @@ namespace sp.datagrid {
                     const name: string = <string>col["fieldName"];
                     const type: string = <string>col["type"];
                     const hidden: boolean = <boolean>col["hidden"];
+<<<<<<< HEAD
                     if (hidden == null || !hidden){
+=======
+                    const display: boolean = <boolean>col["display"];
+                    if ((hidden == null || !hidden) && display == null || display){
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
                         let val: any = sp.datagrid.Util.extractVal(data, name, type);
                         if (name === "CaseNumber"){
                             const cell: sp.datagrid.ClickableDataCell = new sp.datagrid.ClickableDataCell(name, <string>val, <string>data["Id"]);
@@ -2124,7 +2195,11 @@ namespace sp.datagrid {
 
         /*private*/ tableInfo: sp.datagrid.TableTitle;
 
+<<<<<<< HEAD
         public constructor(name: string, grid: sp.datagrid.DataGrid) {
+=======
+        public constructor(name: string, grid: sp.datagrid.DataGrid, dry: boolean, objectType: string) {
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
             super(name, "div");
             this.controls = new com.spoonconsulting.lightning.ButtonMenu("controls", "div");
             this.__refresh = new com.spoonconsulting.lightning.ButtonIcon("refresh", "utility:refresh");
@@ -2134,7 +2209,12 @@ namespace sp.datagrid {
             this.modalRenameList = new sp.datagrid.ModalRenameList("renameList");
             this.modalFieldSelector = null;
             this.bd = new com.spoonconsulting.lightning.Modal.BackDrop("bd");
+<<<<<<< HEAD
             this.tableInfo = new sp.datagrid.TableTitle("tableInfo");
+=======
+            this.tableInfo = null;
+            this.tableInfo = new sp.datagrid.TableTitle("tableInfo", dry);
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
             this.modalFieldSelector = new sp.datagrid.ModalFieldSelector("fieldSelector", grid);
             const left: com.spoonconsulting.lightning.LayoutItem = new com.spoonconsulting.lightning.LayoutItem("left", "div").setSize(10);
             left.addChild(this.tableInfo);
@@ -2147,6 +2227,7 @@ namespace sp.datagrid {
             this.controls.getButton().setPrefixIconName("utility:settings");
             this.controls.setMenuAlignment(com.spoonconsulting.lightning.enums.MenuAlignment.RIGHT);
             itemBtns.addChild(this.controls);
+<<<<<<< HEAD
             itemBtns.addChild(this.__refresh.setVariant(com.spoonconsulting.lightning.enums.Variants.ButtonIconVariant.BORDER_FILLED));
             const mnew: com.spoonconsulting.lightning.MenuItem = new com.spoonconsulting.lightning.MenuItem("new").setLabel("New").refresh();
             const clone: com.spoonconsulting.lightning.MenuItem = new com.spoonconsulting.lightning.MenuItem("clone").setLabel("Clone").refresh();
@@ -2164,6 +2245,42 @@ namespace sp.datagrid {
             this.modalRenameList.setBackdrop(this.bd);
             this.addChild(this.modalFieldSelector);
             this.modalFieldSelector.setBackdrop(this.bd);
+=======
+            let onlyfs: boolean = false;
+            if (objectType === "Case-1" || objectType === "Case-2" || objectType === "Case-3"){
+                onlyfs = true;
+            }
+            if (objectType === "Task" && dry){
+                onlyfs = true;
+            }
+            const fields: com.spoonconsulting.lightning.MenuItem = new com.spoonconsulting.lightning.MenuItem("fieldSelector").setLabel("Select Fields to Display").refresh();
+            if (!onlyfs){
+                const mnew: com.spoonconsulting.lightning.MenuItem = new com.spoonconsulting.lightning.MenuItem("new").setLabel("New").refresh();
+                const clone: com.spoonconsulting.lightning.MenuItem = new com.spoonconsulting.lightning.MenuItem("clone").setLabel("Clone").refresh();
+                const rename: com.spoonconsulting.lightning.MenuItem = new com.spoonconsulting.lightning.MenuItem("rename").setLabel("Rename").refresh();
+                this.controls.getDropdown().addItem(mnew);
+                this.controls.getDropdown().addItem(clone);
+                this.controls.getDropdown().addItem(rename);
+            }
+            this.controls.getDropdown().addItem(fields);
+            if (!onlyfs){
+                const mdelete: com.spoonconsulting.lightning.MenuItem = new com.spoonconsulting.lightning.MenuItem("delete").setLabel("Delete").refresh();
+                this.controls.getDropdown().addItem(mdelete);
+            }
+            if (!onlyfs){
+                this.addChild(this.modalNewList);
+                this.modalNewList.setBackdrop(this.bd);
+                this.addChild(this.modalDeleteList);
+                this.modalDeleteList.setBackdrop(this.bd);
+                this.addChild(this.modalCloneList);
+                this.modalCloneList.setBackdrop(this.bd);
+                this.addChild(this.modalRenameList);
+                this.modalRenameList.setBackdrop(this.bd);
+            }
+            this.addChild(this.modalFieldSelector);
+            this.modalFieldSelector.setBackdrop(this.bd);
+            itemBtns.addChild(this.__refresh.setVariant(com.spoonconsulting.lightning.enums.Variants.ButtonIconVariant.BORDER_FILLED));
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
             this.addChild(this.bd);
             this.__refresh.addEventListener(new GridControls.GridControls$0(this), "click");
             this.controls.addEventListener(new GridControls.GridControls$1(this), "select");
@@ -2267,10 +2384,35 @@ namespace sp.datagrid {
 
         public constructor(name: string) {
             super(name, "div");
+<<<<<<< HEAD
             this.casesGrid = new sp.datagrid.HeavyGrid("cases", "Case");
             this.tasks = new sp.datagrid.HeavyGrid("tasks", "Task");
             this.spinner = new com.spoonconsulting.lightning.Spinner("spinner");
             this.bd = new com.spoonconsulting.lightning.Modal.BackDrop("bd");
+=======
+            this.casesGrid = null;
+            this.tasks = null;
+            this.spinner = new com.spoonconsulting.lightning.Spinner("spinner");
+            this.bd = new com.spoonconsulting.lightning.Modal.BackDrop("bd");
+            let casedry: boolean = false;
+            if (name !== "dss" && name !== "ds" && name !== "dsss"){
+                casedry = true;
+            }
+            let casetype: string = "Case";
+            let tasktype: string = "Task";
+            if (name === "ds"){
+                casetype = "Case-1";
+            } else if (name === "ds-1"){
+                casetype = "Case-2";
+            } else if (name === "ds-2"){
+                casetype = "Case-3";
+            } else if (name === "dsss"){
+                casetype = "Case-4";
+                tasktype = "Task-4";
+            }
+            this.casesGrid = new sp.datagrid.HeavyGrid("cases", casetype, casedry);
+            this.tasks = new sp.datagrid.HeavyGrid("tasks", tasktype, casedry);
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
             this.addChild(this.bd.addChild(this.spinner));
             this.bd.setStyle("display", "none");
             this.addClass("slds-card");
@@ -2278,6 +2420,7 @@ namespace sp.datagrid {
             this.addClass("sticky-grid");
             const head: com.spoonconsulting.lightning.LayoutItem = new com.spoonconsulting.lightning.LayoutItem("head", "div");
             this.addChild(head);
+<<<<<<< HEAD
             head.addChild(new sp.datagrid.AppHeader("appHeader", this.casesGrid.getGrid()));
             const top: com.spoonconsulting.lightning.LayoutItem = new com.spoonconsulting.lightning.LayoutItem("top", "div");
             top.setSize(12);
@@ -2292,6 +2435,16 @@ namespace sp.datagrid {
             this.casesGrid.setAttribute("type", "Case");
             this.tasks.setAttribute("type", "Task");
             sp.datagrid.Util.getService().getDefaultFilter("Case").then((r) => {
+=======
+            head.addChild(new sp.datagrid.AppHeader("appHeader", this.casesGrid.getGrid(), casedry));
+            const top: com.spoonconsulting.lightning.LayoutItem = new com.spoonconsulting.lightning.LayoutItem("top", "div");
+            top.setSize(12);
+            top.addChild(this.casesGrid);
+            this.addChild(top);
+            this.casesGrid.setAttribute("type", "Case");
+            this.setMultipleRows(true);
+            sp.datagrid.Util.getService().getDefaultFilter(casetype).then((r) => {
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
                 this.casesGrid.setFilters$jsweet_lang_Object(r);
                 const filterId: string = <string>r["Id"];
                 sp.datagrid.Util.getService().getCases(0, <string>r["Filters__c"], "Case", filterId).then((cases) => {
@@ -2300,6 +2453,7 @@ namespace sp.datagrid {
                     this.casesGrid.render();
                 });
             });
+<<<<<<< HEAD
             sp.datagrid.Util.getService().getDefaultFilter("Task").then((r) => {
                 this.tasks.setFilters$jsweet_lang_Object(r);
                 const filterId: string = <string>r["Id"];
@@ -2309,6 +2463,26 @@ namespace sp.datagrid {
                     this.tasks.render();
                 });
             });
+=======
+            if (name === "ds-2" || name === "dss" || name === "dsss"){
+                const bottom: com.spoonconsulting.lightning.LayoutItem = new com.spoonconsulting.lightning.LayoutItem("bottom", "div");
+                bottom.setSize(12);
+                this.addChild(bottom);
+                bottom.setStyle("margin-top", "1rem");
+                bottom.addChild(this.tasks);
+                this.tasks.setGridInfo("https://ceva--uat.sandbox.lightning.force.com/img/icon/t4v35/standard/task_120.png", "", "Tasks");
+                this.tasks.setAttribute("type", "Task");
+                sp.datagrid.Util.getService().getDefaultFilter("Task").then((r) => {
+                    this.tasks.setFilters$jsweet_lang_Object(r);
+                    const filterId: string = <string>r["Id"];
+                    sp.datagrid.Util.getService().getCases(0, <string>r["Filters__c"], "Task", filterId).then((cases) => {
+                        this.tasks.setData(cases);
+                        this.tasks.setRendered(false);
+                        this.tasks.render();
+                    });
+                });
+            }
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
         }
 
         public getCasesGrid(): sp.datagrid.HeavyGrid {
@@ -2349,12 +2523,23 @@ namespace sp.datagrid {
     export class HeaderAction extends com.spoonconsulting.lightning.ButtonMenu {
         /*private*/ txtSearch: sp.datagrid.TextSearch;
 
+<<<<<<< HEAD
+=======
+        /*private*/ column: Object;
+
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
         /*private*/ objectType: string;
 
         public constructor(name: string, col: Object, objectType: string) {
             super(name, "span");
             if (this.txtSearch === undefined) { this.txtSearch = null; }
+<<<<<<< HEAD
             if (this.objectType === undefined) { this.objectType = null; }
+=======
+            if (this.column === undefined) { this.column = null; }
+            if (this.objectType === undefined) { this.objectType = null; }
+            this.column = col;
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
             this.objectType = objectType;
             const type: string = <string>col["type"];
             this.getButton().addClass("slds-button_icon-x-small");
@@ -2383,6 +2568,7 @@ namespace sp.datagrid {
                 }
             }
             const fname: string = <string>col["fieldName"];
+<<<<<<< HEAD
             if (fname !== "Branch_Code__c"){
                 if (type !== "Boolean"){
                     const customFilter: com.spoonconsulting.lightning.MenuItem = new com.spoonconsulting.lightning.MenuItem("customFilter");
@@ -2391,6 +2577,14 @@ namespace sp.datagrid {
                     this.getDropdown().addItem(customFilter);
                     this.getDropdown().addMenuDivider();
                 }
+=======
+            if (type !== "Boolean"){
+                const customFilter: com.spoonconsulting.lightning.MenuItem = new com.spoonconsulting.lightning.MenuItem("customFilter");
+                customFilter.setLabel("Custom Filter");
+                customFilter.refresh();
+                this.getDropdown().addItem(customFilter);
+                this.getDropdown().addMenuDivider();
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
             }
             const mWidth: com.spoonconsulting.lightning.MenuItem = new com.spoonconsulting.lightning.MenuItem("width");
             mWidth.setChecked(false);
@@ -2413,6 +2607,7 @@ namespace sp.datagrid {
             slider.setStyle("width", "100%").setStyle("display", "block");
             slider.addEventListener(new HeaderAction.HeaderAction$0(this, wlabel), "change");
             this.getDropdown().addItem(mWidth);
+<<<<<<< HEAD
             if (fname !== "Branch_Code__c"){
                 this.getDropdown().addMenuDivider();
                 this.getDropdown().setStyle("min-width", "250px");
@@ -2460,6 +2655,53 @@ namespace sp.datagrid {
                     msearch.getChildren()[0].setStyle("width", "100%");
                     this.getDropdown().addItem(msearch);
                 }
+=======
+            this.getDropdown().addMenuDivider();
+            this.getDropdown().setStyle("min-width", "250px");
+            if (type === "String"){
+                const metadata: Array<Object> = <Array<Object>>col["metadata"];
+                this.txtSearch = new sp.datagrid.TextSearch("textSearch_" + fname, objectType, col);
+                this.txtSearch.setData(metadata);
+                const msearch: com.spoonconsulting.lightning.MenuItem = new com.spoonconsulting.lightning.MenuItem("textSearch");
+                msearch.setChecked(false);
+                msearch.setPrefixIconName(null);
+                msearch.setIconName(null);
+                msearch.refresh();
+                msearch.getChildren()[0].addChild(this.txtSearch);
+                msearch.getChildren()[0].setStyle("width", "100%");
+                this.getDropdown().addItem(msearch);
+            } else if (type === "Boolean"){
+                const metadata: Array<Object> = <any>(new Array<Object>());
+                const tr: Object = <Object>new Object();
+                tr["label"] = "TRUE";
+                tr["value"] = "TRUE";
+                metadata.push(tr);
+                const fl: Object = <Object>new Object();
+                fl["label"] = "FALSE";
+                fl["value"] = "FALSE";
+                metadata.push(fl);
+                this.txtSearch = new sp.datagrid.TextSearch("textSearch", objectType, col);
+                this.txtSearch.setData(metadata);
+                const msearch: com.spoonconsulting.lightning.MenuItem = new com.spoonconsulting.lightning.MenuItem("textSearch");
+                msearch.setChecked(false);
+                msearch.setPrefixIconName(null);
+                msearch.setIconName(null);
+                msearch.refresh();
+                msearch.getChildren()[0].addChild(this.txtSearch);
+                msearch.getChildren()[0].setStyle("width", "100%");
+                this.getDropdown().addItem(msearch);
+            } else if (type === "DateTime"){
+                this.txtSearch = new sp.datagrid.TextSearch("textSearch", objectType, col);
+                this.txtSearch.setDateOptions();
+                const msearch: com.spoonconsulting.lightning.MenuItem = new com.spoonconsulting.lightning.MenuItem("textSearch");
+                msearch.setChecked(false);
+                msearch.setPrefixIconName(null);
+                msearch.setIconName(null);
+                msearch.refresh();
+                msearch.getChildren()[0].addChild(this.txtSearch);
+                msearch.getChildren()[0].setStyle("width", "100%");
+                this.getDropdown().addItem(msearch);
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
             }
             this.addEventListener(new HeaderAction.HeaderAction$1(this, col, fname), "select");
             const btnCtn: com.spoonconsulting.lightning.MenuItem = new com.spoonconsulting.lightning.MenuItem("btnCtn");
@@ -2477,6 +2719,7 @@ namespace sp.datagrid {
             cancel.setVariant(com.spoonconsulting.lightning.enums.Variants.Variant.NEUTRAL);
             cancel.addEventListener(new HeaderAction.HeaderAction$3(this), "click");
             const clear: com.spoonconsulting.lightning.Button = new com.spoonconsulting.lightning.Button("clear");
+<<<<<<< HEAD
             if (fname !== "Branch_Code__c"){
                 clear.setLabel("Clear filters");
                 clear.addEventListener(new HeaderAction.HeaderAction$4(this, fname), "click");
@@ -2486,6 +2729,13 @@ namespace sp.datagrid {
             if (fname !== "Branch_Code__c"){
                 btnCtn.getChildren()[0].addChild(clear);
             }
+=======
+            clear.setLabel("Clear filters");
+            clear.addEventListener(new HeaderAction.HeaderAction$4(this, fname), "click");
+            clear.setVariant(com.spoonconsulting.lightning.enums.Variants.Variant.DESTRUCTIVE);
+            btnCtn.getChildren()[0].addChild(cancel);
+            btnCtn.getChildren()[0].addChild(clear);
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
             btnCtn.getChildren()[0].addChild(ok);
             btnCtn.getChildren()[0].setStyle("width", "100%").setStyle("text-align", "right");
             this.getDropdown().addMenuDivider();
@@ -2501,6 +2751,7 @@ namespace sp.datagrid {
 
         public displaceDropdown() {
             const drop: HTMLElement = this.getDropdown().getElement();
+<<<<<<< HEAD
             try {
                 let cls: string = ".scroller_" + this.objectType;
                 cls = "c-grids";
@@ -2523,6 +2774,12 @@ namespace sp.datagrid {
                 } catch(e) {
                 }
             }
+=======
+            drop.style.position = "fixed";
+        }
+
+        public positionDropdown(evt: Event) {
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
         }
 
         public setDropdownPosition(evt: Event) {
@@ -2783,7 +3040,11 @@ namespace sp.datagrid {
 
         /*private*/ type: string;
 
+<<<<<<< HEAD
         public constructor(name: string, type: string) {
+=======
+        public constructor(name: string, type: string, dry: boolean) {
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
             super(name, "div");
             this.grid = null;
             this.columns = <any>(new Array<Object>());
@@ -2797,7 +3058,11 @@ namespace sp.datagrid {
             if (this.type === undefined) { this.type = null; }
             this.type = type;
             this.grid = new sp.datagrid.DataGrid("grid", type);
+<<<<<<< HEAD
             this.controls = new sp.datagrid.GridControls("ctrs", this.grid);
+=======
+            this.controls = new sp.datagrid.GridControls("ctrs", this.grid, dry, type);
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
             this.modalListFilters = new sp.datagrid.ModalListFilters("listFilters", type);
             this.addClass("HeavyGrid");
             this.modalListFilters.setBackdrop(this.bd);
@@ -2818,7 +3083,11 @@ namespace sp.datagrid {
             lgridItem.addChild(this.grid);
             lgridItem.addClass("scroller_" + type);
             lgrid.addChild(lgridItem);
+<<<<<<< HEAD
             lgridItem.setStyle("height", "260px").setStyle("overflow", "auto");
+=======
+            lgridItem.setStyle("height", "560px").setStyle("overflow", "auto");
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
             this.addChild(lgrid);
             this.grid.setColumns(this.columns);
             this.grid.on("orderby", (a, b) => {
@@ -2840,6 +3109,44 @@ namespace sp.datagrid {
             this.modalCloseCase.refresh(this.grid, selectedId, this.type);
         }
 
+<<<<<<< HEAD
+=======
+        public getLeft(colName: string): number {
+            const o: Object = this.grid.getFilters();
+            const lst: Array<Object> = <any>(new Array<Object>());
+            {
+                let array155 = Object.keys(o);
+                for(let index154=0; index154 < array155.length; index154++) {
+                    let fieldName = array155[index154];
+                    {
+                        lst.push(<Object>o[fieldName]);
+                    }
+                }
+            }
+            const res: Object[] = lst.sort((a, b) => {
+                const pos1: number = <number>a["position"];
+                const pos2: number = <number>b["position"];
+                return parseFloat(/* compareTo */(<any>((o1: any, o2: any) => { if (o1 && o1.compareTo) { return o1.compareTo(o2); } else { return o1 < o2 ? -1 : o2 < o1 ? 1 : 0; } })(pos1,pos2)) + "");
+            });
+            let total: number = 0;
+            for(let index156=0; index156 < res.length; index156++) {
+                let filter = res[index156];
+                {
+                    let widht: number = 5;
+                    if (filter.hasOwnProperty("width") && filter["width"] != null){
+                        widht = <number>filter["width"];
+                    }
+                    total = total + widht;
+                    const fieldName: string = <string>filter["fieldName"];
+                    if (fieldName === colName){
+                        break;
+                    }
+                }
+            }
+            return total;
+        }
+
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
         public pinCurrent() {
             const filterId: string = <string>this.sfFilters["Id"];
             sp.datagrid.Util.getService().pinFilter(filterId, this.type).then((result) => {
@@ -2854,9 +3161,15 @@ namespace sp.datagrid {
                 if (fe != null && Object.keys(fe).length > 0){
                     let feMsg: string = "";
                     {
+<<<<<<< HEAD
                         let array155 = Object.keys(fe);
                         for(let index154=0; index154 < array155.length; index154++) {
                             let key = array155[index154];
+=======
+                        let array158 = Object.keys(fe);
+                        for(let index157=0; index157 < array158.length; index157++) {
+                            let key = array158[index157];
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
                             {
                                 const f: Array<Object> = <Array<Object>>fe[key];
                                 if (f != null && f.length > 0){
@@ -3117,9 +3430,20 @@ namespace sp.datagrid {
         mergeCases(caseIds: Array<string>): Promise<string>;
 
         pinFilter(filterId: string, objectType: string): Promise<string>;
+<<<<<<< HEAD
     }
 }
 namespace sp.datagrid {
+=======
+
+        getBranches(): Promise<string>;
+    }
+}
+namespace sp.datagrid {
+    export interface IGrids extends api.Renderable {    }
+}
+namespace sp.datagrid {
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
     export class MockHomePageService implements sp.datagrid.HompPageService {
         /**
          * 
@@ -3305,8 +3629,13 @@ namespace sp.datagrid {
         public getUsers(txt: string): Promise<Array<Object>> {
             const results: Array<Object> = <Array<Object>>window["users"];
             const result: Array<Object> = <any>(new Array<Object>());
+<<<<<<< HEAD
             for(let index156=0; index156 < results.length; index156++) {
                 let res = results[index156];
+=======
+            for(let index159=0; index159 < results.length; index159++) {
+                let res = results[index159];
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
                 {
                     if (txt != null && txt.length > 0){
                         if (/* contains */((<string>res["label"]).toLowerCase().indexOf(txt.toLowerCase()) != -1)){
@@ -3334,8 +3663,13 @@ namespace sp.datagrid {
          */
         public getFieldValues(fieldName: string, txt: string, page: number, objectType: string, filterId: string): Promise<Array<Object>> {
             const result: Array<Object> = <Array<Object>>window["cases"];
+<<<<<<< HEAD
             for(let index157=0; index157 < result.length; index157++) {
                 let o = result[index157];
+=======
+            for(let index160=0; index160 < result.length; index160++) {
+                let o = result[index160];
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
                 {
                     o["value"] = o[fieldName];
                     o["label"] = o[fieldName];
@@ -3361,6 +3695,17 @@ namespace sp.datagrid {
             return <any>(new Promise(<any>(((funcInst: any) => { if (typeof funcInst == 'function') { return funcInst } return (arg0, arg1) =>  (funcInst['accept'] ? funcInst['accept'] : funcInst) .call(funcInst, arg0, arg1)})(consu))));
         }
 
+<<<<<<< HEAD
+=======
+        /**
+         * 
+         * @return {Promise}
+         */
+        public getBranches(): Promise<string> {
+            return null;
+        }
+
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
         constructor() {
         }
     }
@@ -3818,9 +4163,15 @@ namespace sp.datagrid {
                     if (fe != null && Object.keys(fe).length > 0){
                         let feMsg: string = "";
                         {
+<<<<<<< HEAD
                             let array159 = Object.keys(fe);
                             for(let index158=0; index158 < array159.length; index158++) {
                                 let key = array159[index158];
+=======
+                            let array162 = Object.keys(fe);
+                            for(let index161=0; index161 < array162.length; index161++) {
+                                let key = array162[index161];
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
                                 {
                                     const f: Array<Object> = <Array<Object>>fe[key];
                                     if (f != null && f.length > 0){
@@ -3971,14 +4322,24 @@ namespace sp.datagrid {
                 const l2: number = <number>b["position"];
                 return parseFloat(/* compareTo */(<any>((o1: any, o2: any) => { if (o1 && o1.compareTo) { return o1.compareTo(o2); } else { return o1 < o2 ? -1 : o2 < o1 ? 1 : 0; } })(l1,l2)) + "");
             });
+<<<<<<< HEAD
             for(let index160=0; index160 < precols.length; index160++) {
                 let col = precols[index160];
+=======
+            for(let index163=0; index163 < precols.length; index163++) {
+                let col = precols[index163];
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
                 {
                     const option: Object = <Object>new Object();
                     option["value"] = <string>col["fieldName"];
                     option["label"] = <string>col["label"];
                     const hidden: boolean = <boolean>col["hidden"];
+<<<<<<< HEAD
                     if (hidden == null || !hidden){
+=======
+                    const display: boolean = <boolean>col["display"];
+                    if ((hidden == null || !hidden)){
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
                         values.push(<string>col["fieldName"]);
                     }
                     this.options.push(option);
@@ -3990,8 +4351,13 @@ namespace sp.datagrid {
                 return parseFloat(/* compareTo */(<any>((o1: any, o2: any) => { if (o1 && o1.compareTo) { return o1.compareTo(o2); } else { return o1 < o2 ? -1 : o2 < o1 ? 1 : 0; } })(l1,l2)) + "");
             });
             this.options = <any>(new Array<Object>());
+<<<<<<< HEAD
             for(let index161=0; index161 < sorted.length; index161++) {
                 let o = sorted[index161];
+=======
+            for(let index164=0; index164 < sorted.length; index164++) {
+                let o = sorted[index164];
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
                 {
                     this.options.push(o);
                 }
@@ -4004,8 +4370,13 @@ namespace sp.datagrid {
                 return parseFloat(/* compareTo */l1.localeCompare(l2) + "");
             });
             this.options = <any>(new Array<Object>());
+<<<<<<< HEAD
             for(let index162=0; index162 < sorted.length; index162++) {
                 let o = sorted[index162];
+=======
+            for(let index165=0; index165 < sorted.length; index165++) {
+                let o = sorted[index165];
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
                 {
                     this.options.push(o);
                 }
@@ -4100,8 +4471,13 @@ namespace sp.datagrid {
                 this.filters = result;
                 this.list.clearChildren();
                 this.list.setRendered(false);
+<<<<<<< HEAD
                 for(let index163=0; index163 < this.filters.length; index163++) {
                     let o = this.filters[index163];
+=======
+                for(let index166=0; index166 < this.filters.length; index166++) {
+                    let o = this.filters[index166];
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
                     {
                         this.addFilter(o);
                     }
@@ -4223,6 +4599,12 @@ namespace sp.datagrid {
                     } else if (result + "" === "merged"){
                         alert("You cannot merge already merged cases");
                         this.__parent.close();
+<<<<<<< HEAD
+=======
+                    } else if (result + "" === "not-email"){
+                        alert("Only cases with origin Email and CEVA can be merged");
+                        this.__parent.close();
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
                     }
                     this.__parent.grid.getCasesGrid().doRefreshList((res) => {
                         this.__parent.close();
@@ -4355,8 +4737,13 @@ namespace sp.datagrid {
             this.recs.setLabel("Choose a Record Type:");
             sp.datagrid.Util.getService().getRecordTypes(objectType).then((result) => {
                 const options: Array<Object> = <any>(new Array<Object>());
+<<<<<<< HEAD
                 for(let index164=0; index164 < result.length; index164++) {
                     let o = result[index164];
+=======
+                for(let index167=0; index167 < result.length; index167++) {
+                    let o = result[index167];
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
                     {
                         const opt: Object = <Object>new Object();
                         opt["value"] = <string>o["Id"];
@@ -4523,7 +4910,11 @@ namespace sp.datagrid {
 
         /*private*/ pin: com.spoonconsulting.lightning.ButtonIcon;
 
+<<<<<<< HEAD
         public constructor(name: string) {
+=======
+        public constructor(name: string, dry: boolean) {
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
             super(name, "div");
             this.icon = new JSContainer("img");
             this.subtitle = new JSContainer("span").addClass("slds-var-p-right_x-small");
@@ -4533,7 +4924,11 @@ namespace sp.datagrid {
             this.addClass("slds-media").addClass("slds-no-space").addClass("slds-grow");
             const iconctn: JSContainer = new JSContainer("div").addClass("slds-avatar").addClass("slds-m-right_small").setStyle("margin-top", "6px");
             this.addChild(iconctn);
+<<<<<<< HEAD
             this.icon.setAttribute("src", "https://ceva--uat.my.salesforce.com/img/icon/t4v35/standard/case_120.png");
+=======
+            this.icon.setAttribute("src", "https://ceva--uat.sandbox.lightning.force.com/img/icon/t4v35/standard/case_120.png");
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
             iconctn.addChild(this.icon).setStyle("background", "#F2CF5B");
             const middle: JSContainer = new JSContainer("middle", "div");
             middle.addClass("slds-media__body").addClass("slds-align-middle");
@@ -4546,6 +4941,7 @@ namespace sp.datagrid {
             const headerName: JSContainer = btn.addChild("", "div").addClass("slds-page-header__name");
             headerName.addChild("", "div").addChild("", "h1").addChild(this.title);
             this.title.addClass("slds-page-header__title").addClass("slds-truncate").addClass("slds-p-right--xx-small");
+<<<<<<< HEAD
             const switcher: JSContainer = new JSContainer("div").addClass("slds-page-header__name-switcher");
             switcher.addChild(this.menu);
             this.menu.getButton().addClass("slds-button--reset").addClass("slds-m-top_xxx-small").addClass("slds-p-right_xxx-small");
@@ -4558,6 +4954,22 @@ namespace sp.datagrid {
             this.pin.setVariant(com.spoonconsulting.lightning.enums.Variants.ButtonIconVariant.BARE);
             this.title.addEventListener(new TableTitle.TableTitle$1(this), "click");
             this.menu.addEventListener(new TableTitle.TableTitle$2(this), "click");
+=======
+            if (!dry){
+                const switcher: JSContainer = new JSContainer("div").addClass("slds-page-header__name-switcher");
+                switcher.addChild(this.menu);
+                this.menu.getButton().addClass("slds-button--reset").addClass("slds-m-top_xxx-small").addClass("slds-p-right_xxx-small");
+                this.menu.setButtonSize(com.spoonconsulting.lightning.enums.Size.EXTRA_SMALL);
+                this.menu.setVariant(com.spoonconsulting.lightning.enums.Variants.ButtonIconVariant.BARE);
+                headerName.addChild(switcher);
+                switcher.addChild(this.pin);
+                this.pin.setTitle("Pin this list");
+                this.pin.addEventListener(new TableTitle.TableTitle$0(this), "click");
+                this.pin.setVariant(com.spoonconsulting.lightning.enums.Variants.ButtonIconVariant.BARE);
+                this.title.addEventListener(new TableTitle.TableTitle$1(this), "click");
+                this.menu.addEventListener(new TableTitle.TableTitle$2(this), "click");
+            }
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
         }
 
         public doOpenListFilters(source: api.Renderable) {
@@ -4719,9 +5131,15 @@ namespace sp.datagrid {
 
         public setSelectedOptions(sels: Array<string>) {
             {
+<<<<<<< HEAD
                 let array166 = this.getItems();
                 for(let index165=0; index165 < array166.length; index165++) {
                     let item = array166[index165];
+=======
+                let array169 = this.getItems();
+                for(let index168=0; index168 < array169.length; index168++) {
+                    let item = array169[index168];
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
                     {
                         const val: string = item.getValue();
                         if (sels.indexOf(val) >= 0){
@@ -4825,8 +5243,13 @@ namespace sp.datagrid {
                 selall.addChild(new com.spoonconsulting.lightning.CheckBox("cl").addEventListener(new TextSearch.TextSearch$1(this), "change")).addChild(new JSContainer("span").setStyle("font-weight", "bold").addClass("slds-truncate").setHtml("Select All"));
                 this.list.addChild(selall);
                 const used: Array<Object> = <any>(new Array<Object>());
+<<<<<<< HEAD
                 for(let index167=0; index167 < data.length; index167++) {
                     let line = data[index167];
+=======
+                for(let index170=0; index170 < data.length; index170++) {
+                    let line = data[index170];
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
                     {
                         const item: TextSearch.ListItem = this.getListItem(line);
                         const selItem: Object = TextSearch.getInSelected(line, selected);
@@ -4838,8 +5261,13 @@ namespace sp.datagrid {
                     }
                 }
                 if (used.length < selected.length){
+<<<<<<< HEAD
                     for(let index168=0; index168 < selected.length; index168++) {
                         let sel = selected[index168];
+=======
+                    for(let index171=0; index171 < selected.length; index171++) {
+                        let sel = selected[index171];
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
                         {
                             const ins: Object = TextSearch.getInSelected(sel, used);
                             if (ins == null){
@@ -4854,8 +5282,13 @@ namespace sp.datagrid {
         }
 
         static getInSelected(line: Object, selected: Array<Object>): Object {
+<<<<<<< HEAD
             for(let index169=0; index169 < selected.length; index169++) {
                 let sel = selected[index169];
+=======
+            for(let index172=0; index172 < selected.length; index172++) {
+                let sel = selected[index172];
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
                 {
                     if (sel["value"] === line["value"]){
                         return line;
@@ -4883,9 +5316,15 @@ namespace sp.datagrid {
         public getSelectedOptions(): Array<Object> {
             const result: Array<Object> = <any>(new Array<Object>());
             {
+<<<<<<< HEAD
                 let array171 = this.getItems();
                 for(let index170=0; index170 < array171.length; index170++) {
                     let item = array171[index170];
+=======
+                let array174 = this.getItems();
+                for(let index173=0; index173 < array174.length; index173++) {
+                    let item = array174[index173];
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
                     {
                         if (item.isSelected()){
                             result.push(item.getData());
@@ -4967,8 +5406,13 @@ namespace sp.datagrid {
                 this.__parent.input.setValue(val);
                 if (!this.__parent.requireRefresh()){
                     const items: Array<TextSearch.ListItem> = this.__parent.getItems();
+<<<<<<< HEAD
                     for(let index172=0; index172 < items.length; index172++) {
                         let item = items[index172];
+=======
+                    for(let index175=0; index175 < items.length; index175++) {
+                        let item = items[index175];
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
                         {
                             if (val == null || val.trim() === ""){
                                 item.setStyle("display", null);
@@ -5004,9 +5448,15 @@ namespace sp.datagrid {
              */
             public performAction(source: api.Renderable, evt: Event) {
                 {
+<<<<<<< HEAD
                     let array174 = this.__parent.getItems();
                     for(let index173=0; index173 < array174.length; index173++) {
                         let item = array174[index173];
+=======
+                    let array177 = this.__parent.getItems();
+                    for(let index176=0; index176 < array177.length; index176++) {
+                        let item = array177[index176];
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
                         {
                             if (item.isVisible())item.cb.setValue((<com.spoonconsulting.lightning.CheckBox><any>source).getValue()); else item.cb.setValue(false);
                         }
@@ -5033,11 +5483,19 @@ namespace sp.datagrid {
 
         public static preprocessData(cols: Array<Object>, data: Array<Object>) {
             console.info(data);
+<<<<<<< HEAD
             for(let index175=0; index175 < data.length; index175++) {
                 let dat = data[index175];
                 {
                     for(let index176=0; index176 < cols.length; index176++) {
                         let col = cols[index176];
+=======
+            for(let index178=0; index178 < data.length; index178++) {
+                let dat = data[index178];
+                {
+                    for(let index179=0; index179 < cols.length; index179++) {
+                        let col = cols[index179];
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
                         {
                             const type: string = <string>col["type"];
                             const name: string = <string>col["fieldName"];
@@ -5132,8 +5590,13 @@ namespace sp.datagrid {
         }
 
         public static getMonth(months: Array<Object>, month: number): Object {
+<<<<<<< HEAD
             for(let index177=0; index177 < months.length; index177++) {
                 let m = months[index177];
+=======
+            for(let index180=0; index180 < months.length; index180++) {
+                let m = months[index180];
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
                 {
                     const va: number = <number>m["value"];
                     if (va === month){
@@ -5149,8 +5612,13 @@ namespace sp.datagrid {
         }
 
         public static getYear(met: Array<Object>, year: number): Object {
+<<<<<<< HEAD
             for(let index178=0; index178 < met.length; index178++) {
                 let o = met[index178];
+=======
+            for(let index181=0; index181 < met.length; index181++) {
+                let o = met[index181];
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
                 {
                     const val: number = <number>o["value"];
                     if (val === year){
@@ -5231,8 +5699,12 @@ namespace sp.datagrid {
             this.div.setHtml("");
             const a: JSContainer = new JSContainer("a");
             a.setHtml(txt);
+<<<<<<< HEAD
             a.setAttribute("href", "/" + Id);
             a.setAttribute("target", "_blank");
+=======
+            a.addEventListener(new ClickableDataCell.ClickableDataCell$0(this, Id), "click");
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
             this.div.addChild(a);
         }
     }
@@ -5240,6 +5712,35 @@ namespace sp.datagrid {
     ClickableDataCell["__interfaces"] = ["framework.components.api.Renderable"];
 
 
+<<<<<<< HEAD
+=======
+
+    export namespace ClickableDataCell {
+
+        export class ClickableDataCell$0 implements api.EventListener {
+            public __parent: any;
+            /**
+             * 
+             * @param {*} source
+             * @param {Event} evt
+             */
+            public performAction(source: api.Renderable, evt: Event) {
+                evt["recordId"] = this.Id;
+                evt["objectType"] = "Task";
+                const grids: sp.datagrid.Grids = <any>(source.getAncestorWithClass<any>("Grids"));
+                grids.fireListener("viewRecord", evt);
+            }
+
+            constructor(__parent: any, private Id: any) {
+                this.__parent = __parent;
+            }
+        }
+        ClickableDataCell$0["__interfaces"] = ["framework.components.api.EventListener"];
+
+
+    }
+
+>>>>>>> 2f3131d154b2489b7e7ca0093a3e64b148c805cf
 }
 namespace sp.datagrid {
     export class DateDataCell extends sp.datagrid.DataCell {
