@@ -46,6 +46,7 @@
 			<groupId>org.vjs</groupId>
 			<artifactId>engine</artifactId>
 			<version>1.0.2-SNAPSHOT</version>
+<<<<<<< HEAD
 		</dependency>
 		<dependency>
 			<groupId>com.spoonconsulting</groupId>
@@ -65,6 +66,9 @@
     <version>0.6.0</version>
 </dependency> -->
 		
+=======
+		</dependency> 
+>>>>>>> a1ee7387e0db97148df32d9743f7f1d3539c3093
 	</dependencies>
 	<build>
 		<sourceDirectory>src/main/java</sourceDirectory>
